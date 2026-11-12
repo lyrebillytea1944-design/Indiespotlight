@@ -1,0 +1,2916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indie Spotlight</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #10131a;
+    --panel: #191e29;
+    --panel2: #202838;
+    --text: #f2f4f8;
+    --muted: #aab4c5;
+    --accent: #8b7bff;
+    --accent2: #b7aaff;
+    --border: #30394b;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 12px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .app { max-width: 1560px; margin: 0 auto; }
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: clamp(52px, 8vw, 76px);
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .intro {
+    color: var(--muted);
+    margin: 0 0 24px;
+    text-align: center;
+  }
+
+  .section {
+    padding: 20px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  h2 { font-size: 20px; margin: 0; }
+  .count { color: var(--muted); font-size: 14px; }
+
+  .genres {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .genre {
+    position: relative;
+    display: flex;
+    flex: 0 0 calc((100% - 50px) / 6);
+    width: calc((100% - 50px) / 6);
+    min-width: 0;
+    height: 48px;
+    min-height: 48px;
+    padding: 8px 26px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--panel2);
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    overflow: hidden;
+    transition: border-color .15s, background .15s;
+  }
+
+  .genre:hover { border-color: var(--accent); }
+  .genre.selected { background: #302c52; border-color: var(--accent); }
+
+  .genre input {
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    accent-color: var(--accent);
+    width: 16px;
+    height: 16px;
+    margin: 0;
+  }
+
+  .genre span {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 32px;
+    margin-bottom: 0;
+  }
+
+  button {
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+  }
+
+  .actions button {
+    display: flex;
+    flex: 1 1 240px;
+    min-width: 200px;
+    max-width: 360px;
+    min-height: 58px;
+    padding: 14px 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: clamp(17px, 2vw, 21px);
+    line-height: 1.2;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  }
+
+  .actions button:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  .actions button:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .actions button.searched {
+    border-color: #a395ff;
+    box-shadow: 0 0 16px rgba(139, 123, 255, 0.45);
+    background: linear-gradient(135deg, #7c6cfc, #5744dd);
+  }
+
+  .actions button.searched.demo-btn {
+    border-color: #55b27e !important;
+    box-shadow: 0 0 16px rgba(56, 161, 105, 0.45) !important;
+    background: linear-gradient(135deg, #377d57, #215438) !important;
+  }
+
+  .actions button.btn-stop-search {
+    background: #991b1b !important;
+    border-color: #ef4444 !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.4) !important;
+  }
+
+  .actions button.btn-stop-search:hover {
+    background: #b91c1c !important;
+    border-color: #f87171 !important;
+    transform: translateY(-1px);
+  }
+
+  .stop-progress-btn {
+    background: rgba(239, 68, 68, 0.18);
+    border: 1px solid rgba(239, 68, 68, 0.45);
+    color: #fca5a5;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-left: 10px;
+  }
+
+  .stop-progress-btn:hover {
+    background: #dc2626;
+    color: #ffffff;
+    border-color: #ef4444;
+  }
+
+  .progress-header-right {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Fallback card when YouTube embeds are blocked or unavailable */
+  .video-fallback-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 20px;
+    text-align: center;
+    background: #141822;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .video-fallback-card.hidden {
+    display: none;
+  }
+
+  .fallback-yt-badge svg {
+    width: 56px;
+    height: 56px;
+    fill: #ff0000;
+    margin-bottom: 12px;
+  }
+
+  .video-fallback-card h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 8px 0;
+  }
+
+  .video-fallback-card p {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 18px 0;
+    max-width: 440px;
+    line-height: 1.5;
+  }
+
+  .video-fallback-action-btn {
+    display: inline-flex;
+    align-items: center;
+    background: #cc0000;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: background 0.15s ease;
+    box-shadow: 0 2px 12px rgba(204, 0, 0, 0.35);
+  }
+
+  .video-fallback-action-btn:hover {
+    background: #ff0000;
+  }
+
+  .btn-refresh-icon {
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 1.15em;
+    font-weight: bold;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .actions button.searched:hover:not(:disabled) .btn-refresh-icon {
+    transform: rotate(180deg);
+  }
+
+  button:disabled { opacity: .55; cursor: wait; }
+  .primary { background: var(--accent); color: white; }
+  .primary:hover:not(:disabled) { background: #7665f0; }
+  .secondary { background: var(--panel2); color: var(--text); border: 1px solid var(--border); }
+
+  .status {
+    color: var(--muted);
+    margin-top: 14px;
+    min-height: 22px;
+    font-size: 14px;
+  }
+
+.demo-section {
+    margin-top: 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 20px;
+  }
+
+  .demo-section .section-heading {
+    margin-bottom: 8px;
+  }
+
+  .section-subtext {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .badge {
+    background: rgba(139, 123, 255, 0.12);
+    color: var(--accent2);
+    border: 1px solid var(--accent);
+    padding: 5px 14px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 650;
+    letter-spacing: 0.02em;
+  }
+
+  .demo-btn {
+    background: linear-gradient(135deg, #2e6648, #204b34) !important;
+    border: 1px solid #448f65 !important;
+    color: #e9fbf1 !important;
+    box-shadow: 0 4px 14px rgba(46, 102, 72, 0.35);
+  }
+
+  .demo-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #377d57, #27593e) !important;
+    border-color: #55b27e !important;
+  }
+
+  .card-badges {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .demo-tag {
+    display: inline-block;
+    background: rgba(56, 161, 105, 0.15);
+    color: #68d391;
+    border: 1px solid rgba(72, 187, 120, 0.45);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .ea-tag {
+    display: inline-block;
+    background: rgba(224, 168, 65, 0.12);
+    color: #fbd38d;
+    border: 1px solid rgba(224, 168, 65, 0.35);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Full-Screen Welcome Notification (Twice As Big) */
+  .welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 13, 20, 0.95);
+    backdrop-filter: blur(14px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+  }
+
+  .welcome-overlay.dismissed {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .welcome-modal {
+    background: #191e29;
+    border: 1px solid #30394b;
+    border-radius: 24px;
+    max-width: 1060px;
+    width: 100%;
+    padding: clamp(36px, 5vw, 60px) clamp(28px, 6vw, 64px) clamp(32px, 5vw, 52px);
+    text-align: center;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    animation: welcomePop 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes welcomePop {
+    from { opacity: 0; transform: scale(0.94) translateY(16px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .welcome-graphic-wrap {
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto 32px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #30394b;
+    background: #121622;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  }
+
+  .quarry-animation {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Excavator CSS Keyframe Animations */
+  .boom-arm {
+    transform-origin: 119px 128px;
+    animation: boomCycle 3.5s ease-in-out infinite;
+  }
+
+  .dipper-arm {
+    transform-origin: 164px 88px;
+    animation: dipperCycle 3.5s ease-in-out infinite;
+  }
+
+  .excavator-bucket {
+    transform-origin: 216px 120px;
+    animation: bucketCycle 3.5s ease-in-out infinite;
+  }
+
+  .excavator-body {
+    transform-origin: 90px 136px;
+    animation: cabRock 3.5s ease-in-out infinite;
+  }
+
+  .dust {
+    opacity: 0;
+    animation: dustFly 3.5s ease-out infinite;
+  }
+
+  .dust-1 { animation-delay: 1.2s; }
+  .dust-2 { animation-delay: 1.4s; }
+  .dust-3 { animation-delay: 1.3s; }
+
+  .quarry-gem {
+    animation: gemGlow 3.5s ease-in-out infinite;
+  }
+
+  @keyframes boomCycle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(14deg); }
+    50% { transform: rotate(18deg); }
+    70% { transform: rotate(-6deg); }
+    85% { transform: rotate(-2deg); }
+  }
+
+  @keyframes dipperCycle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    50% { transform: rotate(16deg); }
+    70% { transform: rotate(24deg); }
+    85% { transform: rotate(6deg); }
+  }
+
+  @keyframes bucketCycle {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-18deg); }
+    45% { transform: rotate(38deg); }
+    70% { transform: rotate(45deg); }
+    85% { transform: rotate(5deg); }
+  }
+
+  @keyframes cabRock {
+    0%, 100% { transform: rotate(0deg); }
+    40% { transform: rotate(1deg); }
+    55% { transform: rotate(-0.5deg); }
+    75% { transform: rotate(-1deg); }
+  }
+
+  @keyframes dustFly {
+    0%, 35% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+    45% { opacity: 0.9; transform: translate(-6px, -12px) scale(1.2); }
+    65% { opacity: 0; transform: translate(-14px, -24px) scale(0.2); }
+    100% { opacity: 0; }
+  }
+
+  @keyframes gemGlow {
+    0%, 100% { opacity: 0.4; transform: scale(0.9); transform-origin: 270px 128px; }
+    50% { opacity: 1; transform: scale(1.15); transform-origin: 270px 128px; filter: drop-shadow(0 0 6px #c4b5fd); }
+  }
+
+  .welcome-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 800;
+    margin: 0 0 20px;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .welcome-text {
+    font-size: clamp(18px, 2.4vw, 24px);
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0 0 18px;
+    max-width: 860px;
+  }
+
+  .welcome-text-strong {
+    font-size: clamp(17px, 2.2vw, 22px);
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0 0 36px;
+    max-width: 860px;
+  }
+
+  .welcome-btn {
+    background: linear-gradient(135deg, var(--accent), #6b58f8);
+    color: #fff;
+    border: 0;
+    border-radius: 16px;
+    padding: 20px 88px;
+    font-size: clamp(20px, 2.5vw, 26px);
+    font-weight: 750;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(139, 123, 255, 0.45);
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+
+  .welcome-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(139, 123, 255, 0.65);
+    background: linear-gradient(135deg, #998aff, #7765ff);
+  }
+
+  .welcome-btn:active {
+    transform: translateY(0);
+  }
+
+  .gameplay-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0;
+    text-align: center;
+    text-decoration: none;
+    color: #f2f4f8;
+    background: #232936;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, transform .1s, color .15s;
+  }
+
+  .gameplay-btn:hover {
+    background: #2e3647;
+    border-color: #ff3b3b;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .gameplay-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: #ff3b3b;
+    flex-shrink: 0;
+  }
+
+  .heading-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* Native YouTube Video Modal Styles */
+  .video-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 13, 20, 0.92);
+    backdrop-filter: blur(10px);
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: modalFadeIn 0.2s ease-out;
+  }
+
+  .video-modal-dialog {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    max-width: 920px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+  }
+
+  .video-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: var(--panel2);
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  .video-modal-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .yt-header-icon {
+    width: 22px;
+    height: 22px;
+    fill: #ff3b3b;
+    flex-shrink: 0;
+  }
+
+  .video-modal-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .video-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .modal-ext-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent2);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: rgba(139, 123, 255, 0.12);
+    border: 1px solid rgba(139, 123, 255, 0.3);
+    transition: background .15s;
+  }
+
+  .modal-ext-link:hover {
+    background: rgba(139, 123, 255, 0.25);
+  }
+
+  .modal-close-btn {
+    background: transparent;
+    border: 0;
+    color: var(--muted);
+    font-size: 26px;
+    cursor: pointer;
+    padding: 0 6px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: color .15s;
+  }
+
+  .modal-close-btn:hover {
+    color: #fff;
+  }
+
+  .video-frame-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .video-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .video-loading-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #0d1017;
+    color: var(--muted);
+    font-size: 14px;
+    z-index: 2;
+  }
+
+  .video-loading-indicator.hidden {
+    display: none;
+  }
+
+  .video-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(139, 123, 255, 0.2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* In-Modal Search & Video Results */
+  .modal-search-section {
+    padding: 16px 20px;
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    max-height: 240px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .modal-search-form {
+    display: flex;
+    gap: 10px;
+  }
+
+  .modal-search-input {
+    flex: 1;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 14px;
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+  }
+
+  .modal-search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .modal-search-submit {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 9px 16px;
+    font: inherit;
+    font-weight: 650;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+
+  .modal-search-submit:hover {
+    background: #2b3345;
+    border-color: var(--accent);
+  }
+
+  .video-results-label {
+    font-size: 12.5px;
+    font-weight: 650;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .video-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 10px;
+  }
+
+  .video-card {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .15s, transform .1s;
+    text-align: left;
+  }
+
+  .video-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .video-card.active {
+    border-color: #ff3b3b;
+    box-shadow: 0 0 10px rgba(255, 59, 59, 0.35);
+  }
+
+  .video-card-thumb-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .video-card-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-card-dur {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 650;
+  }
+
+  .video-card-meta {
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .video-card-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .video-card-channel {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Toast Notification */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: #202838;
+    color: var(--text);
+    border: 1px solid var(--accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 650;
+    z-index: 10010;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .22s ease-out, transform .22s ease-out;
+    pointer-events: none;
+  }
+
+  .toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .demo-link {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background: #2b704c;
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-weight: 650;
+    transition: background .15s;
+  }
+
+  .demo-link:hover { background: #358b5e; }
+
+  /* Polished Progress Component */
+  .progress-wrap {
+    display: none;
+    margin-top: 24px;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+
+  .progress-wrap.visible { display: block; }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 550;
+  }
+
+  .progress-phase {
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.3;
+  }
+
+  .progress-percent {
+    color: var(--accent2);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 9px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: #12151d;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 14px rgba(139, 123, 255, 0.55);
+  }
+
+  .results-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .game {
+    overflow: hidden;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .game-image {
+    width: 100%;
+    aspect-ratio: 460 / 215;
+    object-fit: cover;
+    display: block;
+    background: #252c3b;
+  }
+
+  .game-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .game h3 {
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.35;
+    margin: 0 0 9px;
+    overflow-wrap: anywhere;
+  }
+
+  .description {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0 0 16px;
+    white-space: pre-line;
+  }
+
+  .store-link {
+    display: inline-block;
+    margin-top: auto;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background: #315d45;
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-weight: 650;
+  }
+
+  .store-link:hover { background: #3c7555; }
+
+  .empty {
+    display: none;
+    border: 1px dashed var(--border);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 28px 20px;
+    text-align: center;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .empty.visible { display: block; }
+  .hidden { display: none !important; }
+
+  @media (max-width: 1000px) {
+    .genre {
+      flex-basis: calc((100% - 40px) / 5);
+      width: calc((100% - 40px) / 5);
+    }
+  }
+
+  @media (max-width: 845px) {
+    .genre {
+      flex-basis: calc((100% - 30px) / 4);
+      width: calc((100% - 30px) / 4);
+    }
+    .actions { gap: 14px; }
+    .actions button { flex: 1 1 200px; max-width: 100%; font-size: 18px; min-height: 54px; }
+  }
+
+  @media (max-width: 690px) {
+    
+    .genre {
+      flex-basis: calc((100% - 20px) / 3);
+      width: calc((100% - 20px) / 3);
+    }
+    .actions { gap: 12px; }
+    .actions button { flex: 1 1 100%; width: 100%; max-width: 100%; min-height: 52px; font-size: 18px; }
+  }
+
+  @media (max-width: 540px) {
+    body { padding: 12px; }
+    h1 { font-size: clamp(42px, 12vw, 52px); }
+    .section { padding: 20px; }
+    .section-heading { justify-content: center; text-align: center; }
+    .genre {
+      flex-basis: calc((100% - 10px) / 2);
+      width: calc((100% - 10px) / 2);
+      height: 48px;
+      min-height: 48px;
+      padding: 8px 23px;
+      font-size: 14px;
+    }
+    .genre input { left: 7px; width: 15px; height: 15px; }
+    .actions { margin-top: 28px; gap: 12px; }
+    .actions button { min-height: 52px; padding: 14px 18px; font-size: 18px; }
+    .results-heading { justify-content: center; text-align: center; }
+    .game h3 { text-align: center; }
+  }
+
+  /* Search Mode Tabs */
+  .search-mode-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 22px;
+    background: #141824;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    max-width: 580px;
+  }
+
+  .search-mode-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 14.5px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .search-mode-tab:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .search-mode-tab.active {
+    background: #252e42;
+    color: #ffffff;
+    border: 1px solid rgba(139, 123, 255, 0.4);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  .search-mode-tab svg {
+    width: 17px;
+    height: 17px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* Similar Search Section */
+  .similar-intro h2 {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    color: var(--text);
+  }
+
+  .similar-intro p {
+    margin: 0 0 18px 0;
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .similar-input-wrap {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .similar-input {
+    flex: 2 1 320px;
+    background: #121622;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 16px;
+    color: #ffffff;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .similar-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 14px rgba(139, 123, 255, 0.35);
+  }
+
+  .similar-submit-btn, .similar-demo-btn {
+    flex: 1 1 180px;
+    min-height: 50px !important;
+  }
+
+  .similar-suggestions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .sample-chip {
+    background: #181e2b;
+    border: 1px solid var(--border);
+    color: #cbd5e1;
+    border-radius: 99px;
+    padding: 5px 13px;
+    font-size: 12.5px;
+    font-weight: 550;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .sample-chip:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  /* Mouseover Gameplay Media Container & Preview */
+  .game-media-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 460 / 215;
+    background: #181d28;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .game-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  .game:hover .game-image {
+    transform: scale(1.03);
+  }
+
+  .game-preview-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    overflow: hidden;
+    background: #121620;
+  }
+
+  .game:hover .game-preview-layer {
+    opacity: 1;
+  }
+
+  /* Preview layer always covers the media container area regardless of hover origin */
+  .game-preview-layer {
+    pointer-events: none;
+  }
+
+  .game-preview-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: background-image 0.2s ease, opacity 0.2s ease;
+  }
+
+  .game-preview-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .game-preview-video.is-playing {
+    opacity: 1;
+  }
+
+  .game-preview-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(10, 14, 22, 0.88);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(139, 123, 255, 0.4);
+    color: #c4b5fd;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 3;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .game:hover .game-preview-badge {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .preview-pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #a78bfa;
+    box-shadow: 0 0 8px #a78bfa;
+    animation: pulsePreviewDot 1.2s infinite ease-in-out;
+  }
+
+  @keyframes pulsePreviewDot {
+    0%, 100% { opacity: 0.4; transform: scale(0.85); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* "Games Like This" Button on Card */
+  .similar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 100%;
+    background: #1b2232;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-weight: 650;
+    color: #c4b5fd;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+  }
+
+  .similar-btn:hover {
+    background: rgba(139, 123, 255, 0.18);
+    border-color: var(--accent);
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  .similar-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* YouTube Modal Video Selector Prompt */
+  .video-select-prompt-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 20px;
+    text-align: center;
+    background: #141822;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .prompt-yt-badge svg {
+    width: 52px;
+    height: 52px;
+    fill: #ff0000;
+    margin-bottom: 10px;
+  }
+
+  .video-select-prompt-card h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 6px 0;
+  }
+
+  .video-select-prompt-card p {
+    font-size: 13.5px;
+    color: var(--muted);
+    margin: 0 0 16px 0;
+    max-width: 440px;
+    line-height: 1.45;
+  }
+
+  .video-play-first-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #cc0000;
+    color: #ffffff;
+    border: 0;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    box-shadow: 0 2px 12px rgba(204, 0, 0, 0.4);
+  }
+
+  .video-play-first-btn:hover {
+    background: #ff0000;
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+</head>
+<body>
+<div class="app">
+  <h1>Indie Spotlight</h1>
+  <p class="intro">Discover your next favourite indie game.</p>
+
+  <!-- Full Screen Welcome Notification -->
+  <div class="welcome-overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <div class="welcome-modal">
+      <div class="welcome-graphic-wrap">
+        <svg class="quarry-animation" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Excavation machine digging in a quarry for hidden gems">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="180" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#121622"/>
+              <stop offset="1" stop-color="#1e2535"/>
+            </linearGradient>
+            <linearGradient id="excavatorGold" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-color="#fbbf24"/>
+              <stop offset="1" stop-color="#d97706"/>
+            </linearGradient>
+          </defs>
+
+          <rect width="320" height="180" rx="12" fill="url(#skyGrad)"/>
+          <path d="M0 85 L70 70 L140 80 L220 60 L320 75 L320 180 L0 180 Z" fill="#252e3e" opacity="0.6"/>
+          <path d="M0 110 L90 95 L180 108 L260 92 L320 105 L320 180 L0 180 Z" fill="#2a3447" opacity="0.8"/>
+          <path d="M0 148 L320 148 L320 180 L0 180 Z" fill="#1c2230"/>
+          <path d="M190 148 Q220 120 250 115 Q285 110 320 148 Z" fill="#374151"/>
+          <path d="M225 148 Q245 125 275 120 Q300 118 320 148 Z" fill="#4b5563" opacity="0.7"/>
+
+          <g class="quarry-gem">
+            <polygon points="270,122 277,128 270,138 263,128" fill="#a78bfa" stroke="#c4b5fd" stroke-width="1"/>
+            <circle cx="270" cy="128" r="8" fill="#a78bfa" opacity="0.25"/>
+          </g>
+
+          <circle class="dust dust-1" cx="230" cy="125" r="2.5" fill="#9ca3af"/>
+          <circle class="dust dust-2" cx="240" cy="118" r="2" fill="#d1d5db"/>
+          <circle class="dust dust-3" cx="220" cy="130" r="1.5" fill="#f59e0b"/>
+
+          <g class="excavator-chassis">
+            <rect x="52" y="136" width="76" height="18" rx="7" fill="#1e2430" stroke="#374151" stroke-width="2"/>
+            <circle cx="62" cy="145" r="5" fill="#374151"/>
+            <circle cx="77" cy="145" r="5" fill="#374151"/>
+            <circle cx="92" cy="145" r="5" fill="#374151"/>
+            <circle cx="107" cy="145" r="5" fill="#374151"/>
+            <circle cx="120" cy="145" r="5" fill="#374151"/>
+
+            <g class="excavator-body">
+              <path d="M55 136 L55 112 Q55 106 62 106 L112 106 Q118 106 122 112 L128 126 L128 136 Z" fill="url(#excavatorGold)"/>
+              <rect x="53" y="112" width="16" height="24" rx="2" fill="#b45309"/>
+              <path d="M96 110 L112 110 L118 124 L96 124 Z" fill="#93c5fd" opacity="0.85"/>
+              <line x1="106" y1="110" x2="106" y2="124" stroke="#1e293b" stroke-width="1.5"/>
+
+              <g class="boom-arm">
+                <path d="M118 126 L160 84 L170 88 L124 132 Z" fill="#f59e0b" stroke="#b45309" stroke-width="1"/>
+                <circle cx="119" cy="128" r="3.5" fill="#374151"/>
+                <line x1="110" y1="120" x2="142" y2="98" stroke="#cbd5e1" stroke-width="2.5"/>
+
+                <g class="dipper-arm">
+                  <path d="M165 86 L218 116 L214 122 L160 92 Z" fill="#d97706" stroke="#92400e" stroke-width="1"/>
+                  <circle cx="164" cy="88" r="3" fill="#374151"/>
+                  <line x1="150" y1="84" x2="185" y2="102" stroke="#cbd5e1" stroke-width="2"/>
+
+                  <g class="excavator-bucket">
+                    <path d="M216 119 Q228 115 236 126 L232 136 Q220 138 214 127 Z" fill="#475569" stroke="#1e293b" stroke-width="1.2"/>
+                    <polygon points="234,136 238,140 236,134" fill="#94a3b8"/>
+                    <polygon points="230,137 234,142 232,135" fill="#94a3b8"/>
+                    <polygon points="226,138 230,143 228,136" fill="#94a3b8"/>
+                    <circle cx="216" cy="120" r="2.5" fill="#1e293b"/>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <h2 class="welcome-title" id="welcomeTitle">Welcome to Indie Spotlight</h2>
+      <p class="welcome-text">
+        A search engine that plunges deep into the bowels of Steam to find you hidden gems for your convenience.
+      </p>
+      <p class="welcome-text-strong">
+        This is NOT a curated list or a review site, this searches the Steam library to find gems you might not otherwise have found.
+      </p>
+
+      <button class="welcome-btn" id="welcomeBtn" type="button" onclick="const o=document.getElementById('welcomeOverlay');if(o){o.classList.add('dismissed');o.style.display='none';try{sessionStorage.setItem('indie_spotlight_welcomed','1');}catch(e){}}">Let's Go</button>
+    </div>
+  </div>
+
+  <div class="search-mode-tabs" role="tablist">
+    <button class="search-mode-tab active" id="tabGenres" type="button" role="tab" aria-selected="true">
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span>Browse by Genres</span>
+    </button>
+    <button class="search-mode-tab" id="tabSimilar" type="button" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <span>Find Games Like A Title…</span>
+    </button>
+  </div>
+
+  <section class="section" id="genresSection">
+    <div class="section-heading">
+      <h2>Choose your genres</h2>
+      <div class="heading-controls">
+        <span class="count" id="selectedCount">0 selected</span>
+      </div>
+    </div>
+
+    <div class="genres" id="genres" aria-live="polite"></div>
+
+    <div class="actions">
+      <button class="primary" id="searchButton" type="button" disabled>Find indie games</button>
+      <button class="primary demo-btn" id="searchDemosButton" type="button" disabled>Find games with demos</button>
+      <button class="secondary" id="clearButton" type="button">Clear selection</button>
+    </div>
+  </section>
+
+  <section class="section hidden" id="similarSection">
+    <div class="similar-intro">
+      <h2>Find games like a title you love</h2>
+      <p>Enter any game you love (e.g. <em>Balatro</em>, <em>Outer Wilds</em>, <em>Hades</em>, or <em>Celeste</em>), and we'll plunge deep into Steam to unearth hidden gems matching its exact mechanics and feel.</p>
+    </div>
+    <div class="similar-input-wrap">
+      <input type="text" id="similarInput" class="similar-input" placeholder="Enter a game title (e.g. Balatro, Hades, Inscryption)..." autocomplete="off" />
+      <button class="primary similar-submit-btn" id="similarSearchBtn" type="button">Find Games Like This</button>
+      <button class="primary demo-btn similar-demo-btn" id="similarDemosBtn" type="button">Find with Demos</button>
+    </div>
+    <div class="similar-suggestions">
+      <span class="suggestions-label">Try an example:</span>
+      <button type="button" class="sample-chip" data-game="Balatro">Balatro</button>
+      <button type="button" class="sample-chip" data-game="Hades">Hades</button>
+      <button type="button" class="sample-chip" data-game="Outer Wilds">Outer Wilds</button>
+      <button type="button" class="sample-chip" data-game="Inscryption">Inscryption</button>
+      <button type="button" class="sample-chip" data-game="Hollow Knight">Hollow Knight</button>
+      <button type="button" class="sample-chip" data-game="Slay the Spire">Slay the Spire</button>
+    </div>
+  </section>
+
+  <div class="progress-wrap" id="progressWrap" aria-hidden="true">
+    <div class="progress-header">
+      <span class="progress-phase" id="progressPhase">Searching Steam…</span>
+      <div class="progress-header-right">
+        <span class="progress-percent" id="progressPercent">0%</span>
+        <button class="stop-progress-btn" id="stopProgressBtn" type="button" title="Stop current search">✕ Stop</button>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+  </div>
+
+  <section id="resultsSection" class="hidden">
+    <div class="results-heading"><h2 id="resultsHeading">Your games</h2></div>
+    <div class="results" id="results"></div>
+    <div class="empty" id="empty">
+      No matching games came back this time. Please try again or choose another genre.
+    </div>
+  </section>
+
+  <section id="demosSection" class="hidden">
+    <div class="results-heading"><h2 id="demosHeading">Games with free demos</h2></div>
+    <div class="results" id="demoResults"></div>
+    <div class="empty" id="demoEmpty">
+      No matching games with demos came back this time. Please try again or choose another genre.
+    </div>
+  </section>
+
+  <!-- Native YouTube Gameplay Modal -->
+  <div class="video-modal-backdrop hidden" id="gameplayModal" role="dialog" aria-modal="true" aria-labelledby="modalGameTitle">
+    <div class="video-modal-dialog">
+      <div class="video-modal-header">
+        <div class="video-modal-title-wrap">
+          <svg class="yt-header-icon" viewBox="0 0 24 24"><path d="M10 8.64L15.27 12 10 15.36V8.64M21.58 7.18c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.41c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.82c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.41c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.82z"/></svg>
+          <h3 class="video-modal-title" id="modalGameTitle">Gameplay</h3>
+        </div>
+        <div class="video-modal-actions">
+          <a id="modalExternalLink" class="modal-ext-link" href="#" target="_blank" rel="noopener noreferrer">
+            Open on YouTube &nearr;
+          </a>
+          <button id="modalCloseBtn" class="modal-close-btn" type="button" aria-label="Close video player">&times;</button>
+        </div>
+      </div>
+      <div class="video-frame-container">
+        <div class="video-loading-indicator" id="videoLoadingIndicator">
+          <div class="video-spinner"></div>
+          <span id="videoLoadingText">Searching YouTube for community gameplay…</span>
+        </div>
+        <iframe id="gameplayPlayerFrame" class="video-frame hidden" src="" title="Gameplay Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <div class="video-select-prompt-card" id="videoPromptCard">
+          <div class="prompt-yt-badge">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg>
+          </div>
+          <h4 id="videoPromptTitle">Community Gameplay Footage</h4>
+          <p id="videoPromptDesc">Select a video below to watch it directly in this player, or launch on YouTube.</p>
+          <button id="videoPlayFirstBtn" class="video-play-first-btn" type="button">▶ Play First Video</button>
+        </div>
+        <div class="video-fallback-card hidden" id="videoFallbackCard">
+          <div class="fallback-yt-badge">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg>
+          </div>
+          <h4 id="videoFallbackTitle">Gameplay Preview</h4>
+          <p id="videoFallbackDesc">Watch community gameplay videos, reviews, and walkthroughs directly on YouTube.</p>
+          <a id="videoFallbackBtn" class="video-fallback-action-btn" href="#" target="_blank" rel="noopener noreferrer">
+            Watch Gameplay on YouTube ↗
+          </a>
+        </div>
+      </div>
+      <div class="modal-search-section">
+        <form id="modalSearchForm" class="modal-search-form">
+          <input id="modalSearchInput" class="modal-search-input" type="text" placeholder="Search gameplay videos..." />
+          <button class="modal-search-submit" type="submit">Search</button>
+        </form>
+        <div class="video-results-label">Community Gameplay Videos:</div>
+        <div class="video-cards-grid" id="videoCardsGrid"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Floating Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+</div>
+<script>
+(function () {
+  "use strict";
+
+  const API = "https://script.google.com/macros/s/AKfycbzH-zrOYUj9hGAPD_KslZ_UgqtJpVFDPttfChPTRMKGECAGa5jLFHjgzrHFdP-xW0NuLA/exec";
+
+  // The search can legitimately take a while on a cold cache (the backend stops
+  // itself at ~90 s), so the browser-side limit sits above that.
+  const TIMEOUT_MS = { ping: 20000, tags: 30000, search: 120000 };
+
+  const genresEl = document.getElementById("genres");
+  const countEl = document.getElementById("selectedCount");
+  const searchButton = document.getElementById("searchButton");
+  const searchDemosButton = document.getElementById("searchDemosButton");
+  const clearButton = document.getElementById("clearButton");
+  const statusEl = document.getElementById("status");
+  const progressWrap = document.getElementById("progressWrap");
+  const progressBar = document.getElementById("progressBar");
+  const progressPhase = document.getElementById("progressPhase");
+  const progressPercent = document.getElementById("progressPercent");
+  const resultsSection = document.getElementById("resultsSection");
+  const resultsEl = document.getElementById("results");
+  const emptyEl = document.getElementById("empty");
+  const demosSection = document.getElementById("demosSection");
+  const demoResultsEl = document.getElementById("demoResults");
+  const demoEmptyEl = document.getElementById("demoEmpty");
+
+  const welcomeOverlay = document.getElementById("welcomeOverlay");
+  const welcomeBtn = document.getElementById("welcomeBtn");
+
+  /* ---------- Full-Screen Welcome Overlay Controller ---------- */
+
+  function dismissWelcome() {
+    if (!welcomeOverlay) return;
+    welcomeOverlay.classList.add("dismissed");
+    welcomeOverlay.style.display = "none";
+    try {
+      sessionStorage.setItem("indie_spotlight_welcomed", "1");
+    } catch (e) {}
+  }
+
+  if (sessionStorage.getItem("indie_spotlight_welcomed") === "1") {
+    dismissWelcome();
+  }
+
+  if (welcomeBtn) {
+    welcomeBtn.addEventListener("click", dismissWelcome);
+  }
+
+  if (welcomeOverlay) {
+    welcomeOverlay.addEventListener("click", function (e) {
+      if (e.target === welcomeOverlay) dismissWelcome();
+    });
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && welcomeOverlay && !welcomeOverlay.classList.contains("dismissed")) {
+      dismissWelcome();
+    }
+  });
+
+  let loading = false;
+
+  const seenAppIds = new Set();
+  try {
+    const stored = JSON.parse(sessionStorage.getItem("indie_spotlight_seen") || "[]");
+    if (Array.isArray(stored)) {
+      stored.forEach(function (id) {
+        if (/^\d+$/.test(String(id))) seenAppIds.add(String(id));
+      });
+    }
+  } catch (e) {}
+
+  /* ---------- Meaningful Progress Controller ---------- */
+
+  let progressTimer = null;
+  let currentProgress = 0;
+  let targetProgress = 0;
+
+  const PHASES_STANDARD = [
+    { atMs: 0, pct: 15, text: "Connecting to Steam catalog…" },
+    { atMs: 1500, pct: 38, text: "Scanning indie titles for your selected genres…" },
+    { atMs: 3800, pct: 62, text: "Exploring the indie library…" },
+    { atMs: 6500, pct: 80, text: "Selecting unique recommendations…" },
+    { atMs: 9000, pct: 92, text: "Gathering trailers, screenshots, and store details…" },
+    { atMs: 11500, pct: 96, text: "Finalizing recommendations…" }
+  ];
+
+  const PHASES_DEMOS = [
+    { atMs: 0, pct: 15, text: "Connecting to Steam catalog…" },
+    { atMs: 1500, pct: 38, text: "Scanning playable demos for your selected genres…" },
+    { atMs: 3800, pct: 62, text: "Verifying demo availability…" },
+    { atMs: 6500, pct: 80, text: "Selecting unique recommendations with demos…" },
+    { atMs: 9000, pct: 92, text: "Gathering trailers, screenshots, and store details…" },
+    { atMs: 11500, pct: 96, text: "Finalizing your recommendations…" }
+  ];
+
+  const PHASES_SIMILAR = [
+    { atMs: 0, pct: 15, text: "Connecting to Steam catalog…" },
+    { atMs: 1500, pct: 38, text: "Analyzing game mechanics & player clustering…" },
+    { atMs: 3800, pct: 62, text: "Unearthing hidden indie gems with matching gameplay…" },
+    { atMs: 6500, pct: 80, text: "Selecting unique recommendations…" },
+    { atMs: 9000, pct: 92, text: "Gathering trailers and gameplay screenshots…" },
+    { atMs: 11500, pct: 96, text: "Finalizing recommendations…" }
+  ];
+
+  function startProgress(isDemo, isSimilar) {
+    clearInterval(progressTimer);
+    const phases = isSimilar ? PHASES_SIMILAR : (isDemo ? PHASES_DEMOS : PHASES_STANDARD);
+    const startedAt = Date.now();
+    currentProgress = 5;
+    targetProgress = 15;
+
+    progressWrap.classList.add("visible");
+    progressBar.style.width = "5%";
+    progressPercent.textContent = "5%";
+    progressPhase.textContent = phases[0].text;
+    statusEl.textContent = "";
+
+    progressTimer = setInterval(function () {
+      const elapsed = Date.now() - startedAt;
+
+      for (let i = phases.length - 1; i >= 0; i--) {
+        if (elapsed >= phases[i].atMs) {
+          progressPhase.textContent = phases[i].text;
+          targetProgress = phases[i].pct;
+          break;
+        }
+      }
+
+      if (currentProgress < targetProgress) {
+        currentProgress += Math.max(0.4, (targetProgress - currentProgress) * 0.12);
+      } else if (currentProgress < 97 && elapsed > 12000) {
+        currentProgress += 0.05;
+      }
+
+      const displayPct = Math.min(98, Math.round(currentProgress));
+      progressBar.style.width = displayPct + "%";
+      progressPercent.textContent = displayPct + "%";
+    }, 100);
+  }
+
+  function completeProgress(callback) {
+    clearInterval(progressTimer);
+    progressBar.style.width = "100%";
+    progressPercent.textContent = "100%";
+    progressPhase.textContent = "Recommendations ready!";
+
+    setTimeout(function () {
+      progressWrap.classList.remove("visible");
+      progressBar.style.width = "0%";
+      progressPercent.textContent = "0%";
+      if (typeof callback === "function") callback();
+    }, 320);
+  }
+
+  function stopProgress() {
+    clearInterval(progressTimer);
+    progressWrap.classList.remove("visible");
+    progressBar.style.width = "0%";
+    progressPercent.textContent = "0%";
+  }
+
+  /* ---------- Developer diagnostics ---------- */
+
+  const cspViolations = [];
+  document.addEventListener("securitypolicyviolation", function (ev) {
+    cspViolations.push({
+      time: Date.now(),
+      directive: ev.violatedDirective,
+      blocked: ev.blockedURI
+    });
+  });
+
+  function devLog(level, message, details) {
+    try {
+      console[level]("[Indie Spotlight] " + message, details === undefined ? "" : details);
+    } catch (e) {}
+  }
+
+  function makeError(kind, message, extra) {
+    const err = new Error(message);
+    err.kind = kind;
+    if (extra) Object.keys(extra).forEach(function (k) { err[k] = extra[k]; });
+    return err;
+  }
+
+  /* ---------- JSONP transport & Request Abort Controller ---------- */
+
+  let activeSearchAbort = null;
+
+  function abortCurrentSearch() {
+    if (!loading) return;
+    if (typeof activeSearchAbort === "function") {
+      try { activeSearchAbort(); } catch (e) {}
+      activeSearchAbort = null;
+    }
+    stopProgress();
+    setLoading(false);
+    showToast("Search cancelled");
+    statusEl.textContent = "Search was cancelled.";
+    updateCount();
+  }
+
+  function request(action, extra, timeoutMs) {
+    return new Promise(function (resolve, reject) {
+      const callbackName = "steamCallback_" + Date.now() + "_" +
+        Math.floor(Math.random() * 1000000);
+      const startedAt = Date.now();
+      const script = document.createElement("script");
+      let finished = false;
+      let timer = null;
+
+      const queryParts = [
+        "action=" + encodeURIComponent(action),
+        "callback=" + encodeURIComponent(callbackName),
+        "_=" + encodeURIComponent(Date.now())
+      ];
+
+      Object.keys(extra || {}).forEach(function (key) {
+        queryParts.push(encodeURIComponent(key) + "=" + encodeURIComponent(extra[key]));
+      });
+
+      function removeCallback() {
+        try { delete window[callbackName]; }
+        catch (e) { window[callbackName] = undefined; }
+      }
+
+      function finish(error, data) {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timer);
+        if (action === "search" || action === "similar") activeSearchAbort = null;
+        script.onerror = null;
+        if (script.parentNode) script.parentNode.removeChild(script);
+
+        if (error) {
+          window[callbackName] = function () {};
+          setTimeout(removeCallback, 180000);
+          devLog("warn", action + " request failed (" + error.kind + ") after " +
+            (Date.now() - startedAt) + " ms", { url: script.src, error: error.message });
+          reject(error);
+        } else {
+          removeCallback();
+          devLog("debug", action + " ok in " + (Date.now() - startedAt) + " ms");
+          resolve(data);
+        }
+      }
+
+      if (action === "search" || action === "similar") {
+        activeSearchAbort = function () {
+          finish(makeError("aborted", "Search stopped by user"));
+        };
+      }
+
+      timer = setTimeout(function () {
+        finish(makeError("timeout", "No response within " + timeoutMs + " ms"));
+      }, timeoutMs);
+
+      window[callbackName] = function (data) { finish(null, data); };
+
+      script.onerror = function () {
+        setTimeout(function () {
+          const apiHost = new URL(API).host;
+          const blocked = cspViolations.filter(function (v) {
+            const target = String(v.blocked);
+            return v.time >= startedAt &&
+              (target.indexOf(apiHost) !== -1 || /googleusercontent\.com/i.test(target));
+          })[0];
+          if (blocked) {
+            finish(makeError("csp", "Blocked by Content-Security-Policy: " + blocked.directive));
+          } else {
+            finish(makeError("load", "Script failed to load"));
+          }
+        }, 50);
+      };
+
+      script.async = true;
+      script.src = API + "?" + queryParts.join("&");
+      document.body.appendChild(script);
+    });
+  }
+
+  /* ---------- Developer Diagnose Tool ---------- */
+
+  window.IndieSpotlightDiagnose = async function () {
+    const report = [];
+    async function step(name, action, extra) {
+      const t0 = Date.now();
+      try {
+        const data = await request(action, extra, TIMEOUT_MS[action] || 30000);
+        report.push({ step: name, result: "OK", ms: Date.now() - t0, detail: JSON.stringify(data).slice(0, 120) });
+        return data;
+      } catch (err) {
+        report.push({ step: name, result: "FAIL:" + err.kind, ms: Date.now() - t0, detail: err.message });
+        return null;
+      }
+    }
+
+    const ping = await step("ping (deployment reachable?)", "ping");
+    const tags = await step("tags (Steam tag list)", "tags");
+    console.table(report);
+    return report;
+  };
+
+  /* ---------- Public-facing messages ---------- */
+
+  function friendlyMessage(error) {
+    const kind = error && error.kind;
+    const code = error && error.code;
+    if (kind === "aborted") return "Search was cancelled.";
+    if (kind === "timeout") return "The search is taking longer than expected. Please try again.";
+    if (kind === "backend") {
+      if (code === "NOT_FOUND") return error.message || "Game not found. Please try another title.";
+      if (code === "TAGS_CHANGED") return "The genre list has changed. Please reload the page and try again.";
+      if (code === "NO_SELECTION") return "Choose at least one genre.";
+      return error.message || "Steam isn't responding right now. Please try again in a moment.";
+    }
+    if (kind === "load" || kind === "csp") return "We couldn't reach the game search right now. Please try again in a moment.";
+    return "Something went wrong while searching. Please try again.";
+  }
+
+  /* ---------- Search Mode & UI Controllers ---------- */
+
+  let currentSearchMode = "genres"; // "genres" | "similar"
+  let lastSimilarTerm = "";
+  let lastSimilarAppId = "";
+
+  const tabGenres = document.getElementById("tabGenres");
+  const tabSimilar = document.getElementById("tabSimilar");
+  const genresSection = document.getElementById("genresSection");
+  const similarSection = document.getElementById("similarSection");
+  const similarInput = document.getElementById("similarInput");
+  const similarSearchBtn = document.getElementById("similarSearchBtn");
+  const similarDemosBtn = document.getElementById("similarDemosBtn");
+
+  function switchSearchMode(mode) {
+    currentSearchMode = mode;
+    if (mode === "similar") {
+      tabGenres.classList.remove("active");
+      tabGenres.setAttribute("aria-selected", "false");
+      tabSimilar.classList.add("active");
+      tabSimilar.setAttribute("aria-selected", "true");
+      genresSection.classList.add("hidden");
+      similarSection.classList.remove("hidden");
+      if (similarInput) similarInput.focus();
+    } else {
+      tabSimilar.classList.remove("active");
+      tabSimilar.setAttribute("aria-selected", "false");
+      tabGenres.classList.add("active");
+      tabGenres.setAttribute("aria-selected", "true");
+      similarSection.classList.add("hidden");
+      genresSection.classList.remove("hidden");
+    }
+  }
+
+  if (tabGenres) tabGenres.addEventListener("click", function () { switchSearchMode("genres"); });
+  if (tabSimilar) tabSimilar.addEventListener("click", function () { switchSearchMode("similar"); });
+
+  // Sample quick chips
+  document.querySelectorAll(".sample-chip").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const gname = btn.getAttribute("data-game");
+      if (similarInput) similarInput.value = gname;
+      searchSimilarGames(gname, "", false);
+    });
+  });
+
+  if (similarSearchBtn) {
+    similarSearchBtn.addEventListener("click", function () {
+      const val = (similarInput ? similarInput.value : "").trim();
+      if (!val) {
+        statusEl.textContent = "Please enter a game title.";
+        return;
+      }
+      searchSimilarGames(val, "", false);
+    });
+  }
+
+  if (similarDemosBtn) {
+    similarDemosBtn.addEventListener("click", function () {
+      const val = (similarInput ? similarInput.value : "").trim();
+      if (!val) {
+        statusEl.textContent = "Please enter a game title.";
+        return;
+      }
+      searchSimilarGames(val, "", true);
+    });
+  }
+
+  if (similarInput) {
+    similarInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const val = similarInput.value.trim();
+        if (val) searchSimilarGames(val, "", false);
+      }
+    });
+  }
+
+  function updateCount() {
+    const selected = genresEl.querySelectorAll("input:checked").length;
+    countEl.textContent = selected + " selected";
+    searchButton.disabled = loading || selected === 0;
+    searchDemosButton.disabled = loading || selected === 0;
+  }
+
+  function renderGenres(items) {
+    genresEl.replaceChildren();
+
+    items.forEach(function (genre) {
+      const label = document.createElement("label");
+      label.className = "genre";
+
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.value = String(genre.id);
+      input.name = "genre";
+
+      input.addEventListener("change", function () {
+        label.classList.toggle("selected", input.checked);
+        updateCount();
+      });
+
+      const name = document.createElement("span");
+      name.textContent = genre.name;
+
+      label.appendChild(input);
+      label.appendChild(name);
+      genresEl.appendChild(label);
+    });
+
+    updateCount();
+  }
+
+  let hasSearchedOnce = false;
+
+  function setLoading(active, isDemo, isSimilar) {
+    loading = active;
+    const selectedCount = genresEl.querySelectorAll("input:checked").length;
+    searchButton.disabled = active || selectedCount === 0;
+    searchDemosButton.disabled = active || selectedCount === 0;
+    if (similarSearchBtn) similarSearchBtn.disabled = active;
+    if (similarDemosBtn) similarDemosBtn.disabled = active;
+
+    if (active) {
+      clearButton.disabled = false;
+      clearButton.innerHTML = "✕ Stop search";
+      clearButton.classList.add("btn-stop-search");
+
+      if (isSimilar) {
+        if (isDemo) {
+          if (similarDemosBtn) similarDemosBtn.textContent = "Finding demos…";
+        } else {
+          if (similarSearchBtn) similarSearchBtn.textContent = "Finding similar…";
+        }
+      } else {
+        if (isDemo) {
+          searchDemosButton.textContent = "Finding demos…";
+        } else {
+          searchButton.textContent = "Finding games…";
+        }
+      }
+      startProgress(isDemo, isSimilar);
+    } else {
+      clearButton.textContent = "Clear selection";
+      clearButton.classList.remove("btn-stop-search");
+      clearButton.disabled = false;
+
+      if (hasSearchedOnce) {
+        searchButton.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again';
+        searchButton.classList.add("searched");
+        searchDemosButton.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again (demos)';
+        searchDemosButton.classList.add("searched");
+
+        if (similarSearchBtn) {
+          similarSearchBtn.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again';
+          similarSearchBtn.classList.add("searched");
+        }
+        if (similarDemosBtn) {
+          similarDemosBtn.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again (demos)';
+          similarDemosBtn.classList.add("searched");
+        }
+      } else {
+        searchButton.textContent = "Find indie games";
+        searchButton.classList.remove("searched");
+        searchDemosButton.textContent = "Find games with demos";
+        searchDemosButton.classList.remove("searched");
+
+        if (similarSearchBtn) {
+          similarSearchBtn.textContent = "Find Games Like This";
+          similarSearchBtn.classList.remove("searched");
+        }
+        if (similarDemosBtn) {
+          similarDemosBtn.textContent = "Find with Demos";
+          similarDemosBtn.classList.remove("searched");
+        }
+      }
+    }
+  }
+
+  function clearResults() {
+    resultsEl.replaceChildren();
+    emptyEl.classList.remove("visible");
+    emptyEl.textContent = "No matching games came back this time. Please try again or choose another genre.";
+
+    demoResultsEl.replaceChildren();
+    demoEmptyEl.classList.remove("visible");
+    demoEmptyEl.textContent = "No matching games with demos came back this time. Please try again or choose another genre.";
+  }
+
+  function showMessage(text, isDemo) {
+    clearResults();
+    if (isDemo) {
+      resultsSection.classList.add("hidden");
+      demosSection.classList.remove("hidden");
+      demoEmptyEl.textContent = text;
+      demoEmptyEl.classList.add("visible");
+    } else {
+      demosSection.classList.add("hidden");
+      resultsSection.classList.remove("hidden");
+      emptyEl.textContent = text;
+      emptyEl.classList.add("visible");
+    }
+  }
+
+  /* ---------- Game Card Maker with Hover Video / GIF Preview ---------- */
+
+  function makeGameCard(game, isDemo) {
+    const card = document.createElement("article");
+    card.className = "game";
+
+    // Media Container (Static Image + Hover Video & Screenshot GIF Slide)
+    const mediaContainer = document.createElement("div");
+    mediaContainer.className = "game-media-container";
+
+    const image = document.createElement("img");
+    image.className = "game-image";
+    image.alt = game.name || "Indie game";
+    image.loading = "lazy";
+
+    const appId = String(game.appId || "").trim();
+    const candidates = [];
+    const suppliedImage = game.image || game.header_image || game.headerImage || "";
+
+    if (typeof suppliedImage === "string" && suppliedImage.trim()) {
+      try {
+        const url = new URL(suppliedImage.trim(), "https://store.steampowered.com");
+        if (url.protocol === "http:") url.protocol = "https:";
+        if (url.protocol === "https:") candidates.push(url.href);
+      } catch (e) {}
+    }
+
+    if (/^\d+$/.test(appId)) {
+      const id = encodeURIComponent(appId);
+      candidates.push(
+        "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/" + id + "/header.jpg",
+        "https://cdn.akamai.steamstatic.com/steam/apps/" + id + "/header.jpg",
+        "https://cdn.cloudflare.steamstatic.com/steam/apps/" + id + "/header.jpg"
+      );
+    }
+
+    let imageIndex = 0;
+    image.onerror = function () {
+      if (imageIndex < candidates.length) {
+        image.src = candidates[imageIndex++];
+      } else {
+        image.onerror = null;
+        image.style.display = "none";
+      }
+    };
+
+    if (candidates.length) image.src = candidates[imageIndex++];
+    else image.style.display = "none";
+
+    mediaContainer.appendChild(image);
+
+    // Hover Preview Layer: Screenshot GIF cycle & Video trailer
+    const previewLayer = document.createElement("div");
+    previewLayer.className = "game-preview-layer";
+
+    const previewSlide = document.createElement("div");
+    previewSlide.className = "game-preview-slide";
+    previewLayer.appendChild(previewSlide);
+
+    let hoverVideo = null;
+    let hlsInstance = null;
+
+    if (game.trailerUrl) {
+      hoverVideo = document.createElement("video");
+      hoverVideo.className = "game-preview-video";
+      hoverVideo.muted = true;
+      hoverVideo.loop = true;
+      hoverVideo.playsInline = true;
+      hoverVideo.setAttribute("muted", "");
+      hoverVideo.setAttribute("playsinline", "");
+      hoverVideo.preload = "none";
+      previewLayer.appendChild(hoverVideo);
+    }
+
+    const previewBadge = document.createElement("div");
+    previewBadge.className = "game-preview-badge";
+    previewBadge.innerHTML = '<span class="preview-pulse-dot"></span> Gameplay Preview';
+
+    mediaContainer.appendChild(previewLayer);
+    mediaContainer.appendChild(previewBadge);
+
+    // Hover Controller
+    let slideTimer = null;
+    let slideIndex = 0;
+    const screenshots = Array.isArray(game.screenshots) ? game.screenshots.filter(Boolean) : [];
+
+    // One-shot HLS init — called once, guarded by hlsReady flag
+    let hlsReady = false;
+
+    function initHoverVideo() {
+      if (!hoverVideo || !game.trailerUrl || hlsReady) return;
+      hlsReady = true;
+
+      if (hoverVideo.canPlayType("application/vnd.apple.mpegurl")) {
+        // Safari native HLS
+        hoverVideo.src = game.trailerUrl;
+        hoverVideo.preload = "auto";
+        hoverVideo.load();
+      } else if (window.Hls && Hls.isSupported()) {
+        try {
+          hlsInstance = new Hls({
+            maxBufferLength: 10,
+            maxMaxBufferLength: 20,
+            enableWorker: true,
+            startLevel: 2,      // 480p directly — skip quality negotiation
+            autoStartLoad: true,
+            backBufferLength: 0,
+            liveSyncDurationCount: 1
+          });
+          hlsInstance.loadSource(game.trailerUrl);
+          hlsInstance.attachMedia(hoverVideo);
+        } catch (e) {
+          hoverVideo.src = game.trailerUrl;
+          hoverVideo.preload = "auto";
+          hoverVideo.load();
+        }
+      } else {
+        hoverVideo.src = game.trailerUrl;
+        hoverVideo.preload = "auto";
+        hoverVideo.load();
+      }
+
+      hoverVideo.onplaying = function () {
+        // Video is confirmed playing — stop screenshot GIF, let video take over cleanly
+        clearInterval(slideTimer);
+        previewSlide.style.opacity = "0";
+        hoverVideo.classList.add("is-playing");
+      };
+    }
+
+    // Pre-init video in background after idle so first hover is instant
+    if (hoverVideo && game.trailerUrl) {
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(initHoverVideo, { timeout: 1500 });
+      } else {
+        setTimeout(initHoverVideo, 300);
+      }
+    }
+
+    // Attach hover events to the WHOLE card (article) so mousing anywhere on it
+    // triggers the preview — not just over the top image strip
+    card.addEventListener("mouseenter", function () {
+      // Show preview layer
+      previewLayer.style.pointerEvents = "none";
+
+      // 1. Screenshot GIF cycle
+      if (screenshots.length > 0) {
+        slideIndex = 0;
+        previewSlide.style.backgroundImage = "url('" + screenshots[0] + "')";
+        previewSlide.style.opacity = "1";
+        clearInterval(slideTimer);
+        slideTimer = setInterval(function () {
+          slideIndex = (slideIndex + 1) % screenshots.length;
+          previewSlide.style.backgroundImage = "url('" + screenshots[slideIndex] + "')";
+        }, 650);
+      }
+
+      // 2. Play video (HLS should already be initialised in background)
+      if (hoverVideo && game.trailerUrl) {
+        initHoverVideo(); // no-op if already done
+        const p = hoverVideo.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+    });
+
+    card.addEventListener("mouseleave", function () {
+      clearInterval(slideTimer);
+      previewSlide.style.opacity = "0";
+
+      if (hoverVideo) {
+        hoverVideo.pause();
+        try { hoverVideo.currentTime = 0; } catch (e) {}
+        hoverVideo.classList.remove("is-playing");
+      }
+    });
+
+    // Game Body & Details
+    const body = document.createElement("div");
+    body.className = "game-body";
+
+    const title = document.createElement("h3");
+    title.textContent = game.name || "Untitled game";
+
+    const badgesWrap = document.createElement("div");
+    badgesWrap.className = "card-badges";
+
+    if (game.earlyAccess) {
+      const eaTag = document.createElement("span");
+      eaTag.className = "ea-tag";
+      eaTag.textContent = "Early Access";
+      badgesWrap.appendChild(eaTag);
+    }
+
+    if (game.hasDemo || isDemo) {
+      const demoTag = document.createElement("span");
+      demoTag.className = "demo-tag";
+      demoTag.textContent = "Free Demo Available";
+      badgesWrap.appendChild(demoTag);
+    }
+
+    if (badgesWrap.children.length > 0) {
+      body.appendChild(badgesWrap);
+    }
+
+    const description = document.createElement("p");
+    description.className = "description";
+    description.textContent = game.description || "Discover this game on Steam.";
+
+    const buttonsWrap = document.createElement("div");
+    buttonsWrap.className = "card-buttons";
+
+    if (game.hasDemo && game.demoUrl) {
+      const demoLink = document.createElement("a");
+      demoLink.className = "demo-link";
+      demoLink.textContent = "Play Free Demo on Steam";
+      demoLink.href = game.demoUrl;
+      demoLink.target = "_blank";
+      demoLink.rel = "noopener noreferrer";
+      buttonsWrap.appendChild(demoLink);
+    }
+
+    const storeLink = document.createElement("a");
+    storeLink.className = "store-link";
+    storeLink.textContent = (game.hasDemo && game.demoUrl) ? "View Full Game on Steam" : "View on Steam";
+    storeLink.href = /^\d+$/.test(appId)
+      ? "https://store.steampowered.com/app/" + encodeURIComponent(appId) + "/"
+      : "https://store.steampowered.com";
+    storeLink.target = "_blank";
+    storeLink.rel = "noopener noreferrer";
+    buttonsWrap.appendChild(storeLink);
+
+    // Watch Gameplay Button
+    const gameplayBtn = document.createElement("button");
+    gameplayBtn.className = "gameplay-btn";
+    gameplayBtn.type = "button";
+    gameplayBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 8.64L15.27 12 10 15.36V8.64M21.58 7.18c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.41c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.82c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.41c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.82z"/></svg><span>Watch Gameplay</span>';
+    gameplayBtn.addEventListener("click", function () {
+      openGameplayModal(game.name || "Indie Game");
+    });
+    buttonsWrap.appendChild(gameplayBtn);
+
+    // Find Games Like This Button
+    const similarBtn = document.createElement("button");
+    similarBtn.className = "similar-btn";
+    similarBtn.type = "button";
+    similarBtn.title = "Find games with the exact same mechanics & feel as " + (game.name || "this game");
+    similarBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg><span>Games Like This</span>';
+    similarBtn.addEventListener("click", function () {
+      searchSimilarGames(game.name, game.appId, false);
+    });
+    buttonsWrap.appendChild(similarBtn);
+
+    body.appendChild(title);
+    body.appendChild(description);
+    body.appendChild(buttonsWrap);
+
+    card.appendChild(mediaContainer);
+    card.appendChild(body);
+
+    return card;
+  }
+
+  const FALLBACK_TAGS = [
+    {id:"1670",name:"4X"},{id:"19",name:"Action"},{id:"42804",name:"Action Roguelike"},
+    {id:"4106",name:"Action-Adventure"},{id:"21",name:"Adventure"},{id:"1773",name:"Arcade"},
+    {id:"1084988",name:"Auto Battler"},{id:"4158",name:"Beat 'em up"},{id:"4885",name:"Bullet Hell"},
+    {id:"791774",name:"Card Battler"},{id:"597",name:"Casual"},{id:"3955",name:"Character Action Game"},
+    {id:"4328",name:"City Builder"},{id:"4102",name:"Combat Racing"},{id:"4474",name:"CRPG"},
+    {id:"32322",name:"Deckbuilding"},{id:"1720",name:"Dungeon Crawler"},{id:"1743",name:"Fighting"},
+    {id:"1663",name:"FPS"},{id:"4364",name:"Grand Strategy"},{id:"1646",name:"Hack and Slash"},
+    {id:"1738",name:"Hidden Object"},{id:"615955",name:"Idler"},{id:"11014",name:"Interactive Fiction"},
+    {id:"4434",name:"JRPG"},{id:"10235",name:"Life Sim"},{id:"1665",name:"Match 3"},
+    {id:"1628",name:"Metroidvania"},{id:"1754",name:"MMORPG"},{id:"1718",name:"MOBA"},
+    {id:"56690",name:"On-Rails Shooter"},{id:"7178",name:"Party Game"},{id:"6621",name:"Pinball"},
+    {id:"1625",name:"Platformer"},{id:"1698",name:"Point & Click"},{id:"1664",name:"Puzzle"},
+    {id:"699",name:"Racing"},{id:"3813",name:"Real Time Tactics"},{id:"1752",name:"Rhythm"},
+    {id:"1716",name:"Roguelike"},{id:"1091588",name:"Roguelike Deckbuilder"},{id:"3959",name:"Roguelite"},
+    {id:"122",name:"RPG"},{id:"3810",name:"Sandbox"},{id:"4255",name:"Shoot 'Em Up"},
+    {id:"1774",name:"Shooter"},{id:"599",name:"Simulation"},{id:"29482",name:"Souls-like"},
+    {id:"16598",name:"Space Sim"},{id:"701",name:"Sports"},{id:"1687",name:"Stealth"},
+    {id:"9",name:"Strategy"},{id:"1662",name:"Survival"},{id:"21725",name:"Tactical RPG"},
+    {id:"3814",name:"Third-Person Shooter"},{id:"1645",name:"Tower Defense"},{id:"1741",name:"Turn-Based Strategy"},
+    {id:"14139",name:"Turn-Based Tactics"},{id:"4758",name:"Twin Stick Shooter"},{id:"3799",name:"Visual Novel"},
+    {id:"4684",name:"Wargame"},{id:"47827",name:"Wrestling"}
+  ];
+
+  function renderGames(games, isDemo) {
+    clearResults();
+
+    const targetSection = isDemo ? demosSection : resultsSection;
+    const otherSection = isDemo ? resultsSection : demosSection;
+    const targetResultsEl = isDemo ? demoResultsEl : resultsEl;
+    const targetEmptyEl = isDemo ? demoEmptyEl : emptyEl;
+
+    otherSection.classList.add("hidden");
+    targetSection.classList.remove("hidden");
+
+    const valid = (Array.isArray(games) ? games : []).filter(function (game) {
+      return game && typeof game === "object";
+    });
+
+    if (valid.length === 0) {
+      targetEmptyEl.classList.add("visible");
+      return;
+    }
+
+    valid.forEach(function (game) {
+      if (game.appId && /^\d+$/.test(String(game.appId))) {
+        seenAppIds.add(String(game.appId));
+      }
+      targetResultsEl.appendChild(makeGameCard(game, isDemo));
+    });
+
+    try {
+      sessionStorage.setItem("indie_spotlight_seen", JSON.stringify(Array.from(seenAppIds).slice(-150)));
+    } catch (e) {}
+  }
+
+  async function loadGenres() {
+    statusEl.textContent = "";
+    searchButton.disabled = true;
+    searchDemosButton.disabled = true;
+
+    try {
+      const data = await request("tags", {}, TIMEOUT_MS.tags);
+      if (!data || !Array.isArray(data.tags) || data.tags.length === 0) {
+        throw makeError("shape", "Tags response had no tags", { code: data && data.code });
+      }
+      renderGenres(data.tags);
+    } catch (error) {
+      devLog("warn", "Using built-in genre list because the tags request failed.",
+        { kind: error.kind, message: error.message });
+      renderGenres(FALLBACK_TAGS);
+    }
+
+    statusEl.textContent = "";
+  }
+
+  /* ---------- Genre Search Execution ---------- */
+
+  async function searchGames(hasDemo) {
+    if (loading) return;
+    const isDemo = Boolean(hasDemo);
+
+    const selected = Array.from(genresEl.querySelectorAll("input:checked"))
+      .map(function (input) { return input.value; });
+
+    if (!selected.length) {
+      statusEl.textContent = "Choose at least one genre.";
+      return;
+    }
+
+    setLoading(true, isDemo, false);
+    clearResults();
+
+    try {
+      const excludeParam = Array.from(seenAppIds).slice(-100).join(",");
+      const searchParams = { tagIds: selected.join(",") };
+      if (excludeParam) searchParams.excludeIds = excludeParam;
+      if (isDemo) searchParams.hasDemo = "1";
+
+      const data = await request("search", searchParams, TIMEOUT_MS.search);
+
+      if (!data || typeof data !== "object") {
+        throw makeError("shape", "Search response was not an object");
+      }
+      if (data.error) {
+        throw makeError("backend", String(data.error), { code: data.code });
+      }
+      if (!Array.isArray(data.games)) {
+        throw makeError("shape", "Search response had no games array");
+      }
+
+      hasSearchedOnce = true;
+
+      completeProgress(function () {
+        const resultsHeading = document.getElementById("resultsHeading");
+        const demosHeading = document.getElementById("demosHeading");
+        if (resultsHeading) resultsHeading.textContent = "Your games";
+        if (demosHeading) demosHeading.textContent = "Games with free demos";
+        renderGames(data.games, isDemo);
+        setLoading(false, isDemo, false);
+        updateCount();
+      });
+    } catch (error) {
+      stopProgress();
+      if (error && error.kind === "aborted") {
+        devLog("debug", "Search aborted by user.");
+      } else {
+        devLog("warn", "Search failed.", { kind: error.kind, code: error.code, message: error.message });
+        showMessage(friendlyMessage(error), isDemo);
+      }
+      setLoading(false, isDemo, false);
+      updateCount();
+    }
+  }
+
+  /* ---------- Similar Games Search Execution ("Find Games Like...") ---------- */
+
+  async function searchSimilarGames(term, appId, hasDemo) {
+    if (loading) return;
+    const cleanTerm = (term || "").trim();
+    const cleanAppId = (appId || "").trim();
+    if (!cleanTerm && !cleanAppId) return;
+
+    lastSimilarTerm = cleanTerm;
+    lastSimilarAppId = cleanAppId;
+    switchSearchMode("similar");
+    if (similarInput && cleanTerm) similarInput.value = cleanTerm;
+
+    const isDemo = Boolean(hasDemo);
+    setLoading(true, isDemo, true);
+    clearResults();
+
+    try {
+      const excludeParam = Array.from(seenAppIds).slice(-100).join(",");
+      const params = {};
+      if (cleanTerm) params.term = cleanTerm;
+      if (cleanAppId) params.appId = cleanAppId;
+      if (excludeParam) params.excludeIds = excludeParam;
+      if (isDemo) params.hasDemo = "1";
+
+      const data = await request("similar", params, TIMEOUT_MS.search);
+
+      if (!data || typeof data !== "object") {
+        throw makeError("shape", "Similar response was not an object");
+      }
+      if (data.error) {
+        throw makeError("backend", String(data.error), { code: data.code });
+      }
+      if (!Array.isArray(data.games)) {
+        throw makeError("shape", "Similar response had no games array");
+      }
+
+      hasSearchedOnce = true;
+
+      const srcTitle = (data.sourceGame && data.sourceGame.name) || cleanTerm || "this game";
+      const headingText = isDemo
+        ? "Games like " + srcTitle + " with free demos"
+        : "Games like " + srcTitle;
+
+      completeProgress(function () {
+        const resultsHeading = document.getElementById("resultsHeading");
+        const demosHeading = document.getElementById("demosHeading");
+        if (resultsHeading) resultsHeading.textContent = headingText;
+        if (demosHeading) demosHeading.textContent = headingText;
+        renderGames(data.games, isDemo);
+        setLoading(false, isDemo, true);
+      });
+    } catch (error) {
+      stopProgress();
+      if (error && error.kind === "aborted") {
+        devLog("debug", "Similar search aborted by user.");
+      } else {
+        devLog("warn", "Similar search failed.", { kind: error.kind, code: error.code, message: error.message });
+        showMessage(friendlyMessage(error), isDemo);
+      }
+      setLoading(false, isDemo, true);
+    }
+  }
+
+  clearButton.addEventListener("click", function () {
+    if (loading) {
+      abortCurrentSearch();
+      return;
+    }
+
+    genresEl.querySelectorAll("input:checked").forEach(function (input) {
+      input.checked = false;
+      input.closest(".genre").classList.remove("selected");
+    });
+
+    if (similarInput) similarInput.value = "";
+    lastSimilarTerm = "";
+    lastSimilarAppId = "";
+
+    hasSearchedOnce = false;
+    searchButton.textContent = "Find indie games";
+    searchButton.classList.remove("searched");
+    searchDemosButton.textContent = "Find games with demos";
+    searchDemosButton.classList.remove("searched");
+
+    if (similarSearchBtn) {
+      similarSearchBtn.textContent = "Find Games Like This";
+      similarSearchBtn.classList.remove("searched");
+    }
+    if (similarDemosBtn) {
+      similarDemosBtn.textContent = "Find with Demos";
+      similarDemosBtn.classList.remove("searched");
+    }
+
+    updateCount();
+    statusEl.textContent = "";
+    resultsSection.classList.add("hidden");
+    demosSection.classList.add("hidden");
+    clearResults();
+  });
+
+  const stopProgressBtn = document.getElementById("stopProgressBtn");
+  if (stopProgressBtn) {
+    stopProgressBtn.addEventListener("click", function () {
+      abortCurrentSearch();
+    });
+  }
+
+  searchButton.addEventListener("click", function () {
+    searchGames(false);
+  });
+
+  searchDemosButton.addEventListener("click", function () {
+    searchGames(true);
+  });
+
+  /* ---------- Toast Notification ---------- */
+
+  let toastTimer = null;
+  const toastEl = document.getElementById("toast");
+
+  function showToast(msg) {
+    if (!toastEl) return;
+    clearTimeout(toastTimer);
+    toastEl.textContent = msg;
+    toastEl.classList.add("visible");
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove("visible");
+    }, 3200);
+  }
+
+  /* ---------- Native YouTube Video Modal Controller (No Autoplay Wrong Video) ---------- */
+
+  const gameplayModal = document.getElementById("gameplayModal");
+  const modalGameTitle = document.getElementById("modalGameTitle");
+  const gameplayPlayerFrame = document.getElementById("gameplayPlayerFrame");
+  const videoPromptCard = document.getElementById("videoPromptCard");
+  const videoPromptTitle = document.getElementById("videoPromptTitle");
+  const videoPromptDesc = document.getElementById("videoPromptDesc");
+  const videoPlayFirstBtn = document.getElementById("videoPlayFirstBtn");
+  const videoFallbackCard = document.getElementById("videoFallbackCard");
+  const videoFallbackTitle = document.getElementById("videoFallbackTitle");
+  const videoFallbackBtn = document.getElementById("videoFallbackBtn");
+  const modalExternalLink = document.getElementById("modalExternalLink");
+  const modalCloseBtn = document.getElementById("modalCloseBtn");
+  const videoLoadingIndicator = document.getElementById("videoLoadingIndicator");
+  const videoLoadingText = document.getElementById("videoLoadingText");
+  const modalSearchForm = document.getElementById("modalSearchForm");
+  const modalSearchInput = document.getElementById("modalSearchInput");
+  const videoCardsGrid = document.getElementById("videoCardsGrid");
+
+  let activeVideoId = null;
+  let currentModalVideos = [];
+
+  function loadPlayerVideo(vid) {
+    if (!vid) return;
+    activeVideoId = vid;
+    videoLoadingIndicator.classList.add("hidden");
+    if (videoPromptCard) videoPromptCard.classList.add("hidden");
+    if (videoFallbackCard) videoFallbackCard.classList.add("hidden");
+
+    gameplayPlayerFrame.classList.remove("hidden");
+    gameplayPlayerFrame.src = "https://www.youtube.com/embed/" + encodeURIComponent(vid) + "?autoplay=0&rel=0";
+    modalExternalLink.href = "https://www.youtube.com/watch?v=" + encodeURIComponent(vid);
+
+    const cards = videoCardsGrid.querySelectorAll(".video-card");
+    cards.forEach(function (card) {
+      card.classList.toggle("active", card.getAttribute("data-vid") === vid);
+    });
+  }
+
+  function showVideoFallback(gameTitle) {
+    videoLoadingIndicator.classList.add("hidden");
+    if (videoPromptCard) videoPromptCard.classList.add("hidden");
+    gameplayPlayerFrame.classList.add("hidden");
+    gameplayPlayerFrame.src = "";
+    if (videoFallbackCard) videoFallbackCard.classList.remove("hidden");
+    const query = (gameTitle || "Indie Game").trim();
+    if (videoFallbackTitle) videoFallbackTitle.textContent = query + " — Gameplay";
+    const ytUrl = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query + " gameplay");
+    if (videoFallbackBtn) videoFallbackBtn.href = ytUrl;
+    modalExternalLink.href = ytUrl;
+    renderVideoCards([]);
+  }
+
+  function renderVideoCards(videos) {
+    videoCardsGrid.replaceChildren();
+    currentModalVideos = Array.isArray(videos) ? videos : [];
+
+    if (!currentModalVideos.length) {
+      videoCardsGrid.innerHTML = '<div style="color:var(--muted);font-size:13px;grid-column:1/-1;padding:8px 0;">No alternative community videos found. Use Search above or Open on YouTube.</div>';
+      return;
+    }
+
+    currentModalVideos.forEach(function (v) {
+      const card = document.createElement("div");
+      card.className = "video-card" + (v.id === activeVideoId ? " active" : "");
+      card.setAttribute("data-vid", v.id);
+
+      const thumbWrap = document.createElement("div");
+      thumbWrap.className = "video-card-thumb-wrap";
+
+      const thumbImg = document.createElement("img");
+      thumbImg.className = "video-card-thumb";
+      thumbImg.src = v.thumbnail || ("https://i.ytimg.com/vi/" + v.id + "/mqdefault.jpg");
+      thumbImg.alt = v.title || "Video";
+
+      if (v.duration) {
+        const dur = document.createElement("span");
+        dur.className = "video-card-dur";
+        dur.textContent = v.duration;
+        thumbWrap.appendChild(dur);
+      }
+      thumbWrap.appendChild(thumbImg);
+
+      const meta = document.createElement("div");
+      meta.className = "video-card-meta";
+
+      const title = document.createElement("div");
+      title.className = "video-card-title";
+      title.textContent = v.title || "Gameplay Video";
+
+      const channel = document.createElement("div");
+      channel.className = "video-card-channel";
+      channel.textContent = v.channel || "YouTube";
+
+      meta.appendChild(title);
+      meta.appendChild(channel);
+
+      card.appendChild(thumbWrap);
+      card.appendChild(meta);
+
+      card.addEventListener("click", function () {
+        loadPlayerVideo(v.id);
+      });
+
+      videoCardsGrid.appendChild(card);
+    });
+  }
+
+  if (videoPlayFirstBtn) {
+    videoPlayFirstBtn.addEventListener("click", function () {
+      if (currentModalVideos.length > 0) {
+        loadPlayerVideo(currentModalVideos[0].id);
+      }
+    });
+  }
+
+  async function fetchAndDisplayGameplay(query) {
+    const cleanQuery = (query || "").trim();
+    if (!cleanQuery) return;
+
+    modalSearchInput.value = cleanQuery;
+    modalExternalLink.href = "https://www.youtube.com/results?search_query=" + encodeURIComponent(cleanQuery + " gameplay");
+    videoLoadingIndicator.classList.remove("hidden");
+    if (videoPromptCard) videoPromptCard.classList.add("hidden");
+    if (videoFallbackCard) videoFallbackCard.classList.add("hidden");
+    gameplayPlayerFrame.classList.add("hidden");
+    gameplayPlayerFrame.src = "";
+    videoLoadingText.textContent = "Searching YouTube for \"" + cleanQuery + "\" gameplay…";
+
+    try {
+      // Strict search with quoted game title
+      const data = await request("youtube", { q: '\"' + cleanQuery + '\"' }, 15000);
+      if (data && Array.isArray(data.videos) && data.videos.length > 0) {
+        videoLoadingIndicator.classList.add("hidden");
+        renderVideoCards(data.videos);
+        // Auto-play the first (most relevant) result immediately in the top player
+        loadPlayerVideo(data.videos[0].id);
+      } else {
+        showVideoFallback(cleanQuery);
+      }
+    } catch (err) {
+      devLog("warn", "YouTube fetch failed", err);
+      showVideoFallback(cleanQuery);
+    }
+  }
+
+  function openGameplayModal(gameTitle) {
+    const title = (gameTitle || "Indie Game").trim();
+    modalGameTitle.textContent = title;
+    gameplayModal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    fetchAndDisplayGameplay(title);
+  }
+
+  function closeGameplayModal() {
+    gameplayModal.classList.add("hidden");
+    gameplayPlayerFrame.src = ""; // Stops playback immediately
+    activeVideoId = null;
+    document.body.style.overflow = "";
+  }
+
+  if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeGameplayModal);
+  if (gameplayModal) {
+    gameplayModal.addEventListener("click", function (e) {
+      if (e.target === gameplayModal) closeGameplayModal();
+    });
+  }
+
+  if (modalSearchForm) {
+    modalSearchForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const val = modalSearchInput.value.trim();
+      if (val) fetchAndDisplayGameplay(val);
+    });
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      if (gameplayModal && !gameplayModal.classList.contains("hidden")) {
+        closeGameplayModal();
+      }
+    }
+  });
+
+  /* ---------- Firefox Focus Helper ---------- */
+  try {
+    window.focus();
+    if (document.body) document.body.focus();
+  } catch (e) {}
+
+  window.addEventListener("load", function () {
+    try {
+      window.focus();
+    } catch (e) {}
+  });
+
+  loadGenres();
+})();
+</script>
+</body>
+</html>
