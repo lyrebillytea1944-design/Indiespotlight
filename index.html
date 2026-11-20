@@ -2999,17 +2999,9 @@
     title.textContent = game.name || "Untitled game";
     body.appendChild(title);
 
-    // 2. Badges Row (Early Access / Free Demo / Sale Tag) - min-height 26px keeps rows aligned
+        // 2. Badges Row (Early Access / Free Demo) - min-height 26px keeps rows aligned
     const badgesWrap = document.createElement("div");
     badgesWrap.className = "card-badges";
-
-    if (game.isOnSale || (game.discountPercent && game.discountPercent > 0)) {
-      const saleTag = document.createElement("span");
-      saleTag.className = "sale-tag";
-      const discText = game.discountPercent ? ("-" + game.discountPercent + "%") : "SALE";
-      saleTag.textContent = discText;
-      badgesWrap.appendChild(saleTag);
-    }
 
     if (game.earlyAccess) {
       const eaTag = document.createElement("span");
@@ -3356,8 +3348,8 @@
       completeProgress(function () {
         const resultsHeading = document.getElementById("resultsHeading");
         const demosHeading = document.getElementById("demosHeading");
-        if (resultsHeading) resultsHeading.textContent = "On Sale";
-        if (demosHeading) demosHeading.textContent = "On Sale with Demos";
+        if (resultsHeading) resultsHeading.textContent = "On-Sale Indie Gems";
+        if (demosHeading) demosHeading.textContent = "On-Sale Indie Gems with Demos";
         renderGames(data.games, isDemo);
         setLoading(false, isDemo, "sales");
       });
