@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/png" href="favicon.png">
-<meta name="google-site-verification" content="WhYvy_TLRnNv8ygjwmvPpAjPsmHCKv3LWtP7x4nO6cM" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Indie Spotlight</title>
@@ -1123,12 +1121,14 @@
   .search-mode-tabs {
     display: flex;
     gap: 8px;
-    margin-bottom: 22px;
+    margin: 0 auto 24px auto;
     background: #141824;
     padding: 6px;
-    border-radius: 12px;
+    border-radius: 14px;
     border: 1px solid var(--border);
-    max-width: 580px;
+    max-width: 780px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .search-mode-tab {
@@ -1439,6 +1439,306 @@
   .video-play-first-btn:hover {
     background: #ff0000;
   }
+
+  /* Search Date Range Filter Bar */
+  .search-daterange-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(20, 24, 36, 0.7);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .daterange-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .daterange-label svg {
+    width: 16px;
+    height: 16px;
+    fill: #8b7bff;
+  }
+
+  .daterange-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .daterange-input {
+    width: 88px;
+    background: #0f1219;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #fff;
+    font-size: 13.5px;
+    font-family: inherit;
+    text-align: center;
+    transition: border-color 0.15s ease;
+  }
+
+  .daterange-input:focus {
+    outline: none;
+    border-color: #8b7bff;
+  }
+
+  .daterange-sep {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .daterange-hint {
+    color: var(--muted);
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  /* Custom Search Controls Grid */
+  .custom-controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .custom-control-card {
+    background: rgba(20, 24, 36, 0.7);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+  }
+
+  .custom-control-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .custom-control-title {
+    font-size: 14px;
+    font-weight: 650;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .custom-control-title svg {
+    width: 16px;
+    height: 16px;
+    fill: #8b7bff;
+  }
+
+  .custom-val-badge {
+    background: rgba(139, 123, 255, 0.15);
+    color: #b5a9ff;
+    border: 1px solid rgba(139, 123, 255, 0.35);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .custom-slider-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .custom-range-slider {
+    width: 100%;
+    accent-color: #8b7bff;
+    cursor: pointer;
+  }
+
+  .custom-range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .custom-num-input {
+    flex: 1;
+    background: #0f1219;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #fff;
+    font-size: 13.5px;
+    font-family: inherit;
+    text-align: center;
+  }
+
+  .custom-num-input:focus {
+    outline: none;
+    border-color: #8b7bff;
+  }
+
+  .custom-categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .custom-cat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #192030;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+
+  .custom-cat-chip input {
+    margin: 0;
+    accent-color: #8b7bff;
+    cursor: pointer;
+  }
+
+  .custom-cat-chip:hover {
+    border-color: rgba(139, 123, 255, 0.5);
+    color: #fff;
+  }
+
+  .custom-cat-chip.selected {
+    background: rgba(139, 123, 255, 0.2);
+    border-color: #8b7bff;
+    color: #fff;
+  }
+
+  /* Sales Finder Header Banner */
+  .sales-intro {
+    background: linear-gradient(135deg, rgba(229, 62, 62, 0.12), rgba(221, 107, 32, 0.12));
+    border: 1px solid rgba(229, 62, 62, 0.35);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .sales-intro-icon {
+    width: 42px;
+    height: 42px;
+    background: rgba(229, 62, 62, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .sales-intro-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: #fc8181;
+  }
+
+  .sales-intro-text h2 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    color: #fff;
+  }
+
+  .sales-intro-text p {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+
+  /* Sales Tag on Game Cards */
+  .sale-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(229, 62, 62, 0.18);
+    color: #fc8181;
+    border: 1px solid rgba(229, 62, 62, 0.5);
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    animation: salePulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes salePulse {
+    0%, 100% { border-color: rgba(229, 62, 62, 0.5); }
+    50% { border-color: rgba(254, 178, 178, 0.9); box-shadow: 0 0 10px rgba(229, 62, 62, 0.3); }
+  }
+
+  /* Card Price Display */
+  .card-price-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .price-initial {
+    text-decoration: line-through;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .price-final {
+    color: #68d391;
+    font-weight: 700;
+  }
+
+  .price-discount-pill {
+    background: #e53e3e;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 750;
+  }
+
+  /* Similarity Reason Callout on Card */
+  .similarity-reason-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    background: rgba(139, 123, 255, 0.08);
+    border: 1px solid rgba(139, 123, 255, 0.28);
+    border-radius: 8px;
+    padding: 7px 11px;
+    margin-bottom: 12px;
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: #d1caff;
+  }
+
+  .similarity-reason-icon {
+    width: 14px;
+    height: 14px;
+    fill: #a797ff;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
 </head>
@@ -1534,6 +1834,14 @@
       <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
       <span>Browse by Genres</span>
     </button>
+    <button class="search-mode-tab" id="tabCustom" type="button" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+      <span>Custom Search</span>
+    </button>
+    <button class="search-mode-tab" id="tabSales" type="button" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+      <span>Sales Finder</span>
+    </button>
     <button class="search-mode-tab" id="tabSimilar" type="button" role="tab" aria-selected="false">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
       <span>Find Games Like A Title…</span>
@@ -1546,6 +1854,19 @@
       <div class="heading-controls">
         <span class="count" id="selectedCount">0 selected</span>
       </div>
+    </div>
+
+    <div class="search-daterange-bar">
+      <span class="daterange-label">
+        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        Release Date Range:
+      </span>
+      <div class="daterange-inputs">
+        <input type="number" id="genresStartYear" class="daterange-input" placeholder="Min Year" min="1995" max="2030" />
+        <span class="daterange-sep">to</span>
+        <input type="number" id="genresEndYear" class="daterange-input" placeholder="Max Year" min="1995" max="2030" />
+      </div>
+      <span class="daterange-hint">(Leave blank to search all)</span>
     </div>
 
     <div class="genres" id="genres" aria-live="polite"></div>
@@ -1567,6 +1888,19 @@
       <button class="primary similar-submit-btn" id="similarSearchBtn" type="button">Find Games Like This</button>
       <button class="primary demo-btn similar-demo-btn" id="similarDemosBtn" type="button">Find with Demos</button>
     </div>
+
+    <div class="search-daterange-bar" style="margin-top:14px; margin-bottom:14px;">
+      <span class="daterange-label">
+        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        Release Date Range:
+      </span>
+      <div class="daterange-inputs">
+        <input type="number" id="similarStartYear" class="daterange-input" placeholder="Min Year" min="1995" max="2030" />
+        <span class="daterange-sep">to</span>
+        <input type="number" id="similarEndYear" class="daterange-input" placeholder="Max Year" min="1995" max="2030" />
+      </div>
+      <span class="daterange-hint">(Leave blank to search all)</span>
+    </div>
     <div class="similar-suggestions">
       <span class="suggestions-label">Try an example:</span>
       <button type="button" class="sample-chip" data-game="Balatro">Balatro</button>
@@ -1575,6 +1909,139 @@
       <button type="button" class="sample-chip" data-game="Inscryption">Inscryption</button>
       <button type="button" class="sample-chip" data-game="Hollow Knight">Hollow Knight</button>
       <button type="button" class="sample-chip" data-game="Slay the Spire">Slay the Spire</button>
+    </div>
+  </section>
+  <section class="section hidden" id="customSection">
+    <div class="section-heading">
+      <h2>Custom Parameter Deep Search</h2>
+      <div class="heading-controls">
+        <span class="count" id="customSelectedCount">0 genres selected</span>
+      </div>
+    </div>
+    <p style="color:var(--muted); margin:0 0 18px 0; font-size:14px;">Fine-tune your Steam excavation with precise control over user review rating %, total review count, release date range, genres, and Steam feature categorisations.</p>
+
+    <!-- Custom Parameter Controls Grid -->
+    <div class="custom-controls-grid">
+      <!-- Positivity % Slider -->
+      <div class="custom-control-card">
+        <div class="custom-control-header">
+          <span class="custom-control-title">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            Min Positivity Rate
+          </span>
+          <span class="custom-val-badge" id="customPositivityBadge">85%+ Positive</span>
+        </div>
+        <div class="custom-slider-wrap">
+          <input type="range" id="customPositivitySlider" class="custom-range-slider" min="50" max="98" value="85" step="1" />
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--muted);">
+            <span>50% (Mixed)</span>
+            <span>80% (Very Pos)</span>
+            <span>95%+ (Overwhelming)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review Count Range -->
+      <div class="custom-control-card">
+        <div class="custom-control-header">
+          <span class="custom-control-title">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+            Review Count Range
+          </span>
+          <span class="custom-val-badge" id="customReviewsBadge">20 — 1,500 reviews</span>
+        </div>
+        <div class="custom-range-inputs">
+          <input type="number" id="customMinReviews" class="custom-num-input" placeholder="Min (e.g. 20)" value="20" min="0" max="50000" />
+          <span class="daterange-sep">to</span>
+          <input type="number" id="customMaxReviews" class="custom-num-input" placeholder="Max (e.g. 1500)" value="1500" min="0" max="100000" />
+        </div>
+        <div style="font-size:11.5px; color:var(--muted); margin-top:6px;">Sweet spot: 20–1,000 avoids AAA noise while ensuring genuine quality.</div>
+      </div>
+
+      <!-- Release Date Range -->
+      <div class="custom-control-card">
+        <div class="custom-control-header">
+          <span class="custom-control-title">
+            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+            Release Date Range
+          </span>
+          <span class="custom-val-badge">Optional</span>
+        </div>
+        <div class="custom-range-inputs">
+          <input type="number" id="customStartYear" class="custom-num-input" placeholder="Min Year" min="1995" max="2030" />
+          <span class="daterange-sep">to</span>
+          <input type="number" id="customEndYear" class="custom-num-input" placeholder="Max Year" min="1995" max="2030" />
+        </div>
+        <div class="daterange-hint" style="margin-top:6px;">Leave blank to search all years</div>
+      </div>
+
+      <!-- Steam Feature Categories -->
+      <div class="custom-control-card">
+        <div class="custom-control-header">
+          <span class="custom-control-title">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            Feature Filter
+          </span>
+          <span class="custom-val-badge">Optional</span>
+        </div>
+        <div class="custom-categories-list" id="customCategoriesList">
+          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Single-player"> Single-player</label>
+          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Multi-player"> Multi-player</label>
+          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Co-op"> Co-op</label>
+          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Full controller support"> Full Controller</label>
+          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Achievements"> Achievements</label>
+          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Cloud"> Steam Cloud</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Genre Selection Grid -->
+    <div style="font-size:14px; font-weight:650; color:#fff; margin-bottom:10px;">Select Specific Genres (or leave blank to search across all indie tags):</div>
+    <div class="genres" id="customGenres" aria-live="polite"></div>
+
+    <div class="actions" style="margin-top:20px;">
+      <button class="primary" id="customSearchBtn" type="button">Run Custom Search</button>
+      <button class="primary demo-btn" id="customDemosBtn" type="button">Custom Search (with Demos)</button>
+      <button class="secondary" id="customClearBtn" type="button">Reset Parameters</button>
+    </div>
+  </section>
+
+  <section class="section hidden" id="salesSection">
+    <div class="sales-intro">
+      <div class="sales-intro-icon">
+        <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+      </div>
+      <div class="sales-intro-text">
+        <h2>Steam On-Sale Indie Hidden Gems</h2>
+        <p>Searches directly for high-quality hidden gems that are currently discounted on Steam. Pick your preferred genres or leave blank to discover any game currently on sale!</p>
+      </div>
+    </div>
+
+    <div class="search-daterange-bar">
+      <span class="daterange-label">
+        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        Release Date Range:
+      </span>
+      <div class="daterange-inputs">
+        <input type="number" id="salesStartYear" class="daterange-input" placeholder="Min Year" min="1995" max="2030" />
+        <span class="daterange-sep">to</span>
+        <input type="number" id="salesEndYear" class="daterange-input" placeholder="Max Year" min="1995" max="2030" />
+      </div>
+      <span class="daterange-hint">(Leave blank to search all)</span>
+    </div>
+
+    <div class="section-heading">
+      <h2>Filter Sales by Genres (Optional)</h2>
+      <div class="heading-controls">
+        <span class="count" id="salesSelectedCount">All genres</span>
+      </div>
+    </div>
+    <div class="genres" id="salesGenres" aria-live="polite"></div>
+
+    <div class="actions" style="margin-top:20px;">
+      <button class="primary" id="salesSearchBtn" type="button" style="background:#e53e3e; border-color:#fc8181;">Find Games On Sale</button>
+      <button class="primary demo-btn" id="salesDemosBtn" type="button">On Sale + Free Demo</button>
+      <button class="secondary" id="salesClearBtn" type="button">Clear Filters</button>
     </div>
   </section>
 
@@ -1766,9 +2233,31 @@
     { atMs: 11500, pct: 96, text: "Finalizing recommendations…" }
   ];
 
-  function startProgress(isDemo, isSimilar) {
+  const PHASES_CUSTOM = [
+    { atMs: 0, pct: 15, text: "Connecting to Steam catalog…" },
+    { atMs: 1500, pct: 38, text: "Applying custom rating, review count & date filters…" },
+    { atMs: 3800, pct: 62, text: "Scanning indie catalog for qualifying titles…" },
+    { atMs: 6500, pct: 80, text: "Filtering features & categorisations…" },
+    { atMs: 9000, pct: 92, text: "Gathering trailers, screenshots, and prices…" },
+    { atMs: 11500, pct: 96, text: "Finalizing custom recommendations…" }
+  ];
+
+  const PHASES_SALES = [
+    { atMs: 0, pct: 15, text: "Connecting to Steam store…" },
+    { atMs: 1500, pct: 38, text: "Scanning current Steam specials and discounts…" },
+    { atMs: 3800, pct: 62, text: "Filtering for top-tier discounted indie gems…" },
+    { atMs: 6500, pct: 80, text: "Checking discount rates and sale status…" },
+    { atMs: 9000, pct: 92, text: "Gathering trailers, screenshots, and store prices…" },
+    { atMs: 11500, pct: 96, text: "Finalizing on-sale recommendations…" }
+  ];
+
+  function startProgress(isDemo, mode) {
     clearInterval(progressTimer);
-    const phases = isSimilar ? PHASES_SIMILAR : (isDemo ? PHASES_DEMOS : PHASES_STANDARD);
+    let phases = PHASES_STANDARD;
+    if (mode === "similar") phases = PHASES_SIMILAR;
+    else if (mode === "custom") phases = PHASES_CUSTOM;
+    else if (mode === "sales") phases = PHASES_SALES;
+    else if (isDemo) phases = PHASES_DEMOS;
     const startedAt = Date.now();
     currentProgress = 5;
     targetProgress = 15;
@@ -1839,6 +2328,8 @@
       console[level]("[Indie Spotlight] " + message, details === undefined ? "" : details);
     } catch (e) {}
   }
+
+  function escapeHtml_(s) { return String(s||"").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
   function makeError(kind, message, extra) {
     const err = new Error(message);
@@ -1984,39 +2475,54 @@
 
   /* ---------- Search Mode & UI Controllers ---------- */
 
-  let currentSearchMode = "genres"; // "genres" | "similar"
+  let currentSearchMode = "genres"; // "genres" | "custom" | "sales" | "similar"
   let lastSimilarTerm = "";
   let lastSimilarAppId = "";
 
   const tabGenres = document.getElementById("tabGenres");
+  const tabCustom = document.getElementById("tabCustom");
+  const tabSales = document.getElementById("tabSales");
   const tabSimilar = document.getElementById("tabSimilar");
+
   const genresSection = document.getElementById("genresSection");
+  const customSection = document.getElementById("customSection");
+  const salesSection = document.getElementById("salesSection");
   const similarSection = document.getElementById("similarSection");
+
   const similarInput = document.getElementById("similarInput");
   const similarSearchBtn = document.getElementById("similarSearchBtn");
   const similarDemosBtn = document.getElementById("similarDemosBtn");
 
+  const allTabs = [
+    { id: "genres", tab: tabGenres, sec: genresSection },
+    { id: "custom", tab: tabCustom, sec: customSection },
+    { id: "sales", tab: tabSales, sec: salesSection },
+    { id: "similar", tab: tabSimilar, sec: similarSection }
+  ];
+
   function switchSearchMode(mode) {
     currentSearchMode = mode;
-    if (mode === "similar") {
-      tabGenres.classList.remove("active");
-      tabGenres.setAttribute("aria-selected", "false");
-      tabSimilar.classList.add("active");
-      tabSimilar.setAttribute("aria-selected", "true");
-      genresSection.classList.add("hidden");
-      similarSection.classList.remove("hidden");
-      if (similarInput) similarInput.focus();
-    } else {
-      tabSimilar.classList.remove("active");
-      tabSimilar.setAttribute("aria-selected", "false");
-      tabGenres.classList.add("active");
-      tabGenres.setAttribute("aria-selected", "true");
-      similarSection.classList.add("hidden");
-      genresSection.classList.remove("hidden");
+    allTabs.forEach(function (item) {
+      if (!item.tab || !item.sec) return;
+      if (item.id === mode) {
+        item.tab.classList.add("active");
+        item.tab.setAttribute("aria-selected", "true");
+        item.sec.classList.remove("hidden");
+      } else {
+        item.tab.classList.remove("active");
+        item.tab.setAttribute("aria-selected", "false");
+        item.sec.classList.add("hidden");
+      }
+    });
+
+    if (mode === "similar" && similarInput) {
+      similarInput.focus();
     }
   }
 
   if (tabGenres) tabGenres.addEventListener("click", function () { switchSearchMode("genres"); });
+  if (tabCustom) tabCustom.addEventListener("click", function () { switchSearchMode("custom"); });
+  if (tabSales) tabSales.addEventListener("click", function () { switchSearchMode("sales"); });
   if (tabSimilar) tabSimilar.addEventListener("click", function () { switchSearchMode("similar"); });
 
   // Sample quick chips
@@ -2069,65 +2575,140 @@
 
   function renderGenres(items) {
     genresEl.replaceChildren();
+    const customGenresEl = document.getElementById("customGenres");
+    const salesGenresEl = document.getElementById("salesGenres");
+    if (customGenresEl) customGenresEl.replaceChildren();
+    if (salesGenresEl) salesGenresEl.replaceChildren();
 
     items.forEach(function (genre) {
+      // 1. Standard Genres
       const label = document.createElement("label");
       label.className = "genre";
-
       const input = document.createElement("input");
       input.type = "checkbox";
       input.value = String(genre.id);
       input.name = "genre";
-
       input.addEventListener("change", function () {
         label.classList.toggle("selected", input.checked);
         updateCount();
       });
-
       const name = document.createElement("span");
       name.textContent = genre.name;
-
       label.appendChild(input);
       label.appendChild(name);
       genresEl.appendChild(label);
+
+      // 2. Custom Search Genres
+      if (customGenresEl) {
+        const cLabel = document.createElement("label");
+        cLabel.className = "genre";
+        const cInput = document.createElement("input");
+        cInput.type = "checkbox";
+        cInput.value = String(genre.id);
+        cInput.name = "customGenre";
+        cInput.addEventListener("change", function () {
+          cLabel.classList.toggle("selected", cInput.checked);
+          updateCustomCount();
+        });
+        const cName = document.createElement("span");
+        cName.textContent = genre.name;
+        cLabel.appendChild(cInput);
+        cLabel.appendChild(cName);
+        customGenresEl.appendChild(cLabel);
+      }
+
+      // 3. Sales Search Genres
+      if (salesGenresEl) {
+        const sLabel = document.createElement("label");
+        sLabel.className = "genre";
+        const sInput = document.createElement("input");
+        sInput.type = "checkbox";
+        sInput.value = String(genre.id);
+        sInput.name = "salesGenre";
+        sInput.addEventListener("change", function () {
+          sLabel.classList.toggle("selected", sInput.checked);
+          updateSalesCount();
+        });
+        const sName = document.createElement("span");
+        sName.textContent = genre.name;
+        sLabel.appendChild(sInput);
+        sLabel.appendChild(sName);
+        salesGenresEl.appendChild(sLabel);
+      }
     });
 
     updateCount();
+    updateCustomCount();
+    updateSalesCount();
+  }
+
+  function updateCustomCount() {
+    const customGenresEl = document.getElementById("customGenres");
+    const countEl = document.getElementById("customSelectedCount");
+    if (!customGenresEl || !countEl) return;
+    const count = customGenresEl.querySelectorAll("input:checked").length;
+    countEl.textContent = count ? (count + " selected") : "All genres";
+  }
+
+  function updateSalesCount() {
+    const salesGenresEl = document.getElementById("salesGenres");
+    const countEl = document.getElementById("salesSelectedCount");
+    if (!salesGenresEl || !countEl) return;
+    const count = salesGenresEl.querySelectorAll("input:checked").length;
+    countEl.textContent = count ? (count + " selected") : "All genres";
   }
 
   let hasSearchedOnce = false;
 
-  function setLoading(active, isDemo, isSimilar) {
+  function setLoading(active, isDemo, searchType) {
     loading = active;
     const selectedCount = genresEl.querySelectorAll("input:checked").length;
     searchButton.disabled = active || selectedCount === 0;
     searchDemosButton.disabled = active || selectedCount === 0;
     if (similarSearchBtn) similarSearchBtn.disabled = active;
     if (similarDemosBtn) similarDemosBtn.disabled = active;
+    const customSearchBtn = document.getElementById("customSearchBtn");
+    const customDemosBtn = document.getElementById("customDemosBtn");
+    const salesSearchBtn = document.getElementById("salesSearchBtn");
+    const salesDemosBtn = document.getElementById("salesDemosBtn");
+    if (customSearchBtn) customSearchBtn.disabled = active;
+    if (customDemosBtn) customDemosBtn.disabled = active;
+    if (salesSearchBtn) salesSearchBtn.disabled = active;
+    if (salesDemosBtn) salesDemosBtn.disabled = active;
+
+    const stopClearBtns = [clearButton, document.getElementById("customClearBtn"), document.getElementById("salesClearBtn")].filter(Boolean);
 
     if (active) {
-      clearButton.disabled = false;
-      clearButton.innerHTML = "✕ Stop search";
-      clearButton.classList.add("btn-stop-search");
+      stopClearBtns.forEach(function (btn) {
+        btn.disabled = false;
+        btn.innerHTML = "✕ Stop search";
+        btn.classList.add("btn-stop-search");
+      });
 
-      if (isSimilar) {
-        if (isDemo) {
-          if (similarDemosBtn) similarDemosBtn.textContent = "Finding demos…";
-        } else {
-          if (similarSearchBtn) similarSearchBtn.textContent = "Finding similar…";
-        }
+      if (searchType === "similar") {
+        if (isDemo && similarDemosBtn) similarDemosBtn.textContent = "Finding demos…";
+        else if (similarSearchBtn) similarSearchBtn.textContent = "Finding similar…";
+      } else if (searchType === "custom") {
+        if (isDemo && customDemosBtn) customDemosBtn.textContent = "Custom searching…";
+        else if (customSearchBtn) customSearchBtn.textContent = "Custom searching…";
+      } else if (searchType === "sales") {
+        if (isDemo && salesDemosBtn) salesDemosBtn.textContent = "Finding sales…";
+        else if (salesSearchBtn) salesSearchBtn.textContent = "Finding sales…";
       } else {
-        if (isDemo) {
-          searchDemosButton.textContent = "Finding demos…";
-        } else {
-          searchButton.textContent = "Finding games…";
-        }
+        if (isDemo) searchDemosButton.textContent = "Finding demos…";
+        else searchButton.textContent = "Finding games…";
       }
-      startProgress(isDemo, isSimilar);
+      startProgress(isDemo, searchType);
     } else {
+      stopClearBtns.forEach(function (btn) {
+        btn.classList.remove("btn-stop-search");
+        btn.disabled = false;
+      });
       clearButton.textContent = "Clear selection";
-      clearButton.classList.remove("btn-stop-search");
-      clearButton.disabled = false;
+      const customClearBtn = document.getElementById("customClearBtn");
+      if (customClearBtn) customClearBtn.textContent = "Reset Parameters";
+      const salesClearBtn = document.getElementById("salesClearBtn");
+      if (salesClearBtn) salesClearBtn.textContent = "Clear Filters";
 
       if (hasSearchedOnce) {
         searchButton.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again';
@@ -2143,6 +2724,22 @@
           similarDemosBtn.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again (demos)';
           similarDemosBtn.classList.add("searched");
         }
+        if (customSearchBtn) {
+          customSearchBtn.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again';
+          customSearchBtn.classList.add("searched");
+        }
+        if (customDemosBtn) {
+          customDemosBtn.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again (demos)';
+          customDemosBtn.classList.add("searched");
+        }
+        if (salesSearchBtn) {
+          salesSearchBtn.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again';
+          salesSearchBtn.classList.add("searched");
+        }
+        if (salesDemosBtn) {
+          salesDemosBtn.innerHTML = '<span class="btn-refresh-icon">↻</span> Search again (demos)';
+          salesDemosBtn.classList.add("searched");
+        }
       } else {
         searchButton.textContent = "Find indie games";
         searchButton.classList.remove("searched");
@@ -2156,6 +2753,22 @@
         if (similarDemosBtn) {
           similarDemosBtn.textContent = "Find with Demos";
           similarDemosBtn.classList.remove("searched");
+        }
+        if (customSearchBtn) {
+          customSearchBtn.textContent = "Run Custom Search";
+          customSearchBtn.classList.remove("searched");
+        }
+        if (customDemosBtn) {
+          customDemosBtn.textContent = "Custom Search (with Demos)";
+          customDemosBtn.classList.remove("searched");
+        }
+        if (salesSearchBtn) {
+          salesSearchBtn.textContent = "Find Games On Sale";
+          salesSearchBtn.classList.remove("searched");
+        }
+        if (salesDemosBtn) {
+          salesDemosBtn.textContent = "On Sale + Free Demo";
+          salesDemosBtn.classList.remove("searched");
         }
       }
     }
@@ -2372,6 +2985,14 @@
     const badgesWrap = document.createElement("div");
     badgesWrap.className = "card-badges";
 
+    if (game.isOnSale || (game.discountPercent && game.discountPercent > 0)) {
+      const saleTag = document.createElement("span");
+      saleTag.className = "sale-tag";
+      const discText = game.discountPercent ? ("-" + game.discountPercent + "% SALE") : "ON SALE";
+      saleTag.innerHTML = '<svg style="width:12px;height:12px;fill:currentColor" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg> ' + discText;
+      badgesWrap.appendChild(saleTag);
+    }
+
     if (game.earlyAccess) {
       const eaTag = document.createElement("span");
       eaTag.className = "ea-tag";
@@ -2388,6 +3009,28 @@
 
     if (badgesWrap.children.length > 0) {
       body.appendChild(badgesWrap);
+    }
+
+    // If similarity reason exists (from Games Like This), show concise badge
+    if (game.similarityReason) {
+      const reasonBox = document.createElement("div");
+      reasonBox.className = "similarity-reason-box";
+      reasonBox.innerHTML = '<svg class="similarity-reason-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><span><strong>Why it matches:</strong> ' + escapeHtml_(game.similarityReason) + '</span>';
+      body.appendChild(reasonBox);
+    }
+
+    // If price information exists, display price / discount
+    if (game.finalPrice || game.initialPrice) {
+      const priceWrap = document.createElement("div");
+      priceWrap.className = "card-price-wrap";
+      if (game.discountPercent > 0) {
+        priceWrap.innerHTML = '<span class="price-discount-pill">-' + game.discountPercent + '%</span>' +
+          (game.initialPrice ? '<span class="price-initial">' + escapeHtml_(game.initialPrice) + '</span>' : '') +
+          '<span class="price-final">' + escapeHtml_(game.finalPrice) + '</span>';
+      } else {
+        priceWrap.innerHTML = '<span class="price-final">' + escapeHtml_(game.finalPrice || "Available on Steam") + '</span>';
+      }
+      body.appendChild(priceWrap);
     }
 
     const description = document.createElement("p");
@@ -2547,6 +3190,11 @@
       if (excludeParam) searchParams.excludeIds = excludeParam;
       if (isDemo) searchParams.hasDemo = "1";
 
+      const startYearVal = (document.getElementById("genresStartYear") ? document.getElementById("genresStartYear").value : "").trim();
+      const endYearVal = (document.getElementById("genresEndYear") ? document.getElementById("genresEndYear").value : "").trim();
+      if (startYearVal) searchParams.startYear = startYearVal;
+      if (endYearVal) searchParams.endYear = endYearVal;
+
       const data = await request("search", searchParams, TIMEOUT_MS.search);
 
       if (!data || typeof data !== "object") {
@@ -2585,6 +3233,205 @@
 
   /* ---------- Similar Games Search Execution ("Find Games Like...") ---------- */
 
+  
+  /* ---------- Custom Search Execution ---------- */
+
+  async function searchCustomGames(hasDemo) {
+    if (loading) return;
+    const isDemo = Boolean(hasDemo);
+
+    const customGenresEl = document.getElementById("customGenres");
+    const selected = customGenresEl
+      ? Array.from(customGenresEl.querySelectorAll("input:checked")).map(function (input) { return input.value; })
+      : [];
+
+    setLoading(true, isDemo, "custom");
+    clearResults();
+
+    try {
+      const excludeParam = Array.from(seenAppIds).slice(-100).join(",");
+      const searchParams = { action: "custom" };
+      if (selected.length) searchParams.tagIds = selected.join(",");
+      if (excludeParam) searchParams.excludeIds = excludeParam;
+      if (isDemo) searchParams.hasDemo = "1";
+
+      const minPos = document.getElementById("customPositivitySlider") ? document.getElementById("customPositivitySlider").value : "85";
+      const minRev = document.getElementById("customMinReviews") ? document.getElementById("customMinReviews").value.trim() : "20";
+      const maxRev = document.getElementById("customMaxReviews") ? document.getElementById("customMaxReviews").value.trim() : "1500";
+      const startYearVal = document.getElementById("customStartYear") ? document.getElementById("customStartYear").value.trim() : "";
+      const endYearVal = document.getElementById("customEndYear") ? document.getElementById("customEndYear").value.trim() : "";
+
+      if (minPos) searchParams.minPositive = minPos;
+      if (minRev) searchParams.minReviews = minRev;
+      if (maxRev) searchParams.maxReviews = maxRev;
+      if (startYearVal) searchParams.startYear = startYearVal;
+      if (endYearVal) searchParams.endYear = endYearVal;
+
+      const data = await request("custom", searchParams, TIMEOUT_MS.search);
+
+      if (!data || typeof data !== "object") throw makeError("shape", "Response was not an object");
+      if (data.error) throw makeError("backend", String(data.error), { code: data.code });
+      if (!Array.isArray(data.games)) throw makeError("shape", "Response had no games array");
+
+      hasSearchedOnce = true;
+
+      // Client-side feature category filter if any selected
+      const selectedCats = Array.from(document.querySelectorAll('input[name="customCat"]:checked')).map(function(c) { return c.value; });
+      let finalGames = data.games;
+      if (selectedCats.length > 0) {
+        finalGames = data.games.filter(function (game) {
+          if (!Array.isArray(game.categories)) return true;
+          return selectedCats.some(function(cat) { return game.categories.indexOf(cat) !== -1; });
+        });
+      }
+
+      completeProgress(function () {
+        const resultsHeading = document.getElementById("resultsHeading");
+        const demosHeading = document.getElementById("demosHeading");
+        if (resultsHeading) resultsHeading.textContent = "Custom Search Results (" + minPos + "%+ rating)";
+        if (demosHeading) demosHeading.textContent = "Custom Search Results with Demos";
+        renderGames(finalGames, isDemo);
+        setLoading(false, isDemo, "custom");
+      });
+    } catch (error) {
+      stopProgress();
+      if (error && error.kind === "aborted") {
+        devLog("debug", "Custom search aborted.");
+      } else {
+        devLog("warn", "Custom search failed.", { kind: error.kind, code: error.code, message: error.message });
+        showMessage(friendlyMessage(error), isDemo);
+      }
+      setLoading(false, isDemo, "custom");
+    }
+  }
+
+  /* ---------- Sales Finder Execution ---------- */
+
+  async function searchSalesGames(hasDemo) {
+    if (loading) return;
+    const isDemo = Boolean(hasDemo);
+
+    const salesGenresEl = document.getElementById("salesGenres");
+    const selected = salesGenresEl
+      ? Array.from(salesGenresEl.querySelectorAll("input:checked")).map(function (input) { return input.value; })
+      : [];
+
+    setLoading(true, isDemo, "sales");
+    clearResults();
+
+    try {
+      const excludeParam = Array.from(seenAppIds).slice(-100).join(",");
+      const searchParams = { action: "sales", onlySales: "1" };
+      if (selected.length) searchParams.tagIds = selected.join(",");
+      if (excludeParam) searchParams.excludeIds = excludeParam;
+      if (isDemo) searchParams.hasDemo = "1";
+
+      const startYearVal = document.getElementById("salesStartYear") ? document.getElementById("salesStartYear").value.trim() : "";
+      const endYearVal = document.getElementById("salesEndYear") ? document.getElementById("salesEndYear").value.trim() : "";
+      if (startYearVal) searchParams.startYear = startYearVal;
+      if (endYearVal) searchParams.endYear = endYearVal;
+
+      const data = await request("sales", searchParams, TIMEOUT_MS.search);
+
+      if (!data || typeof data !== "object") throw makeError("shape", "Response was not an object");
+      if (data.error) throw makeError("backend", String(data.error), { code: data.code });
+      if (!Array.isArray(data.games)) throw makeError("shape", "Response had no games array");
+
+      hasSearchedOnce = true;
+
+      completeProgress(function () {
+        const resultsHeading = document.getElementById("resultsHeading");
+        const demosHeading = document.getElementById("demosHeading");
+        if (resultsHeading) resultsHeading.textContent = "On-Sale Indie Gems";
+        if (demosHeading) demosHeading.textContent = "On-Sale Indie Gems with Demos";
+        renderGames(data.games, isDemo);
+        setLoading(false, isDemo, "sales");
+      });
+    } catch (error) {
+      stopProgress();
+      if (error && error.kind === "aborted") {
+        devLog("debug", "Sales search aborted.");
+      } else {
+        devLog("warn", "Sales search failed.", { kind: error.kind, code: error.code, message: error.message });
+        showMessage(friendlyMessage(error), isDemo);
+      }
+      setLoading(false, isDemo, "sales");
+    }
+  }
+
+  // Positivity Slider Listener
+  const customPosSlider = document.getElementById("customPositivitySlider");
+  const customPosBadge = document.getElementById("customPositivityBadge");
+  if (customPosSlider && customPosBadge) {
+    customPosSlider.addEventListener("input", function () {
+      customPosBadge.textContent = customPosSlider.value + "%+ Positive";
+    });
+  }
+
+  // Category chip styling listener
+  document.querySelectorAll('.custom-cat-chip input').forEach(function (chk) {
+    chk.addEventListener('change', function () {
+      chk.closest('.custom-cat-chip').classList.toggle('selected', chk.checked);
+    });
+  });
+
+  // Wire Custom search buttons
+  const customSearchBtnEl = document.getElementById("customSearchBtn");
+  const customDemosBtnEl = document.getElementById("customDemosBtn");
+  const customClearBtnEl = document.getElementById("customClearBtn");
+  if (customSearchBtnEl) customSearchBtnEl.addEventListener("click", function () { searchCustomGames(false); });
+  if (customDemosBtnEl) customDemosBtnEl.addEventListener("click", function () { searchCustomGames(true); });
+  if (customClearBtnEl) {
+    customClearBtnEl.addEventListener("click", function () {
+      if (loading) { abortCurrentSearch(); return; }
+      if (customPosSlider) { customPosSlider.value = 85; customPosBadge.textContent = "85%+ Positive"; }
+      const minRevEl = document.getElementById("customMinReviews");
+      const maxRevEl = document.getElementById("customMaxReviews");
+      const startYEl = document.getElementById("customStartYear");
+      const endYEl = document.getElementById("customEndYear");
+      if (minRevEl) minRevEl.value = "20";
+      if (maxRevEl) maxRevEl.value = "1500";
+      if (startYEl) startYEl.value = "";
+      if (endYEl) endYEl.value = "";
+      document.querySelectorAll('input[name="customCat"]').forEach(function (c) {
+        c.checked = false;
+        c.closest('.custom-cat-chip').classList.remove('selected');
+      });
+      const cGenres = document.getElementById("customGenres");
+      if (cGenres) {
+        cGenres.querySelectorAll("input:checked").forEach(function(i) {
+          i.checked = false;
+          i.closest(".genre").classList.remove("selected");
+        });
+      }
+      updateCustomCount();
+    });
+  }
+
+  // Wire Sales search buttons
+  const salesSearchBtnEl = document.getElementById("salesSearchBtn");
+  const salesDemosBtnEl = document.getElementById("salesDemosBtn");
+  const salesClearBtnEl = document.getElementById("salesClearBtn");
+  if (salesSearchBtnEl) salesSearchBtnEl.addEventListener("click", function () { searchSalesGames(false); });
+  if (salesDemosBtnEl) salesDemosBtnEl.addEventListener("click", function () { searchSalesGames(true); });
+  if (salesClearBtnEl) {
+    salesClearBtnEl.addEventListener("click", function () {
+      if (loading) { abortCurrentSearch(); return; }
+      const sStart = document.getElementById("salesStartYear");
+      const sEnd = document.getElementById("salesEndYear");
+      if (sStart) sStart.value = "";
+      if (sEnd) sEnd.value = "";
+      const sGenres = document.getElementById("salesGenres");
+      if (sGenres) {
+        sGenres.querySelectorAll("input:checked").forEach(function(i) {
+          i.checked = false;
+          i.closest(".genre").classList.remove("selected");
+        });
+      }
+      updateSalesCount();
+    });
+  }
+
   async function searchSimilarGames(term, appId, hasDemo) {
     if (loading) return;
     const cleanTerm = (term || "").trim();
@@ -2607,6 +3454,11 @@
       if (cleanAppId) params.appId = cleanAppId;
       if (excludeParam) params.excludeIds = excludeParam;
       if (isDemo) params.hasDemo = "1";
+
+      const startYearVal = (document.getElementById("similarStartYear") ? document.getElementById("similarStartYear").value : "").trim();
+      const endYearVal = (document.getElementById("similarEndYear") ? document.getElementById("similarEndYear").value : "").trim();
+      if (startYearVal) params.startYear = startYearVal;
+      if (endYearVal) params.endYear = endYearVal;
 
       const data = await request("similar", params, TIMEOUT_MS.search);
 
