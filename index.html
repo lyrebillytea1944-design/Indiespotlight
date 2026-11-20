@@ -1190,24 +1190,14 @@
   }
 
   /* Similar Search Section */
-  .similar-intro h2 {
-    margin: 0 0 8px 0;
-    font-size: 22px;
-    color: var(--text);
-  }
-
-  .similar-intro p {
-    margin: 0 0 18px 0;
-    font-size: 14.5px;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
   .similar-input-wrap {
     display: flex;
+    justify-content: center;
     gap: 12px;
     flex-wrap: wrap;
     align-items: center;
+    max-width: 960px;
+    margin: 0 auto;
   }
 
   .similar-input {
@@ -1230,35 +1220,6 @@
   .similar-submit-btn, .similar-demo-btn {
     flex: 1 1 180px;
     min-height: 50px !important;
-  }
-
-  .similar-suggestions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 14px;
-    font-size: 13px;
-    color: var(--muted);
-  }
-
-  .sample-chip {
-    background: #181e2b;
-    border: 1px solid var(--border);
-    color: #cbd5e1;
-    border-radius: 99px;
-    padding: 5px 13px;
-    font-size: 12.5px;
-    font-weight: 550;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .sample-chip:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #ffffff;
-    transform: translateY(-1px);
   }
 
   /* Mouseover Gameplay Media Container & Preview */
@@ -1527,12 +1488,13 @@
     font-style: italic;
   }
 
-  /* Custom Search Controls Grid */
+   /* Custom Search Controls Grid */
   .custom-controls-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: start;
     gap: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .custom-control-card {
@@ -1545,6 +1507,11 @@
     align-items: center;
     text-align: center;
     box-sizing: border-box;
+  }
+
+  .custom-feature-card {
+    width: 100%;
+    margin-bottom: 20px;
   }
 
   .custom-control-header {
@@ -1662,66 +1629,7 @@
     color: #fff;
   }
 
-  /* Sales Finder Header Banner */
-  .sales-intro {
-    background: linear-gradient(135deg, rgba(229, 62, 62, 0.12), rgba(221, 107, 32, 0.12));
-    border: 1px solid rgba(229, 62, 62, 0.35);
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 12px;
-  }
-
-  .similar-intro {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .similar-intro h2 {
-    text-align: center;
-    margin-bottom: 8px;
-  }
-
-  .similar-intro p {
-    text-align: center;
-    max-width: 650px;
-    margin: 0 auto;
-  }
-
-  .sales-intro-icon {
-    width: 42px;
-    height: 42px;
-    background: rgba(229, 62, 62, 0.2);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .sales-intro-icon svg {
-    width: 24px;
-    height: 24px;
-    fill: #fc8181;
-  }
-
-  .sales-intro-text h2 {
-    margin: 0 0 4px;
-    font-size: 18px;
-    color: #fff;
-  }
-
-  .sales-intro-text p {
-    margin: 0;
-    font-size: 13.5px;
-    color: var(--muted);
-  }
-
-  /* Sales Tag on Game Cards */
+   /* Sales Tag on Game Cards */
   .sale-tag {
     display: inline-flex;
     align-items: center;
@@ -1971,10 +1879,9 @@
     </div>
   </section>
 
-  <section class="section hidden" id="similarSection">
-    <div class="similar-intro">
+      <section class="section hidden" id="similarSection">
+    <div class="section-heading">
       <h2>Find games like a title you love</h2>
-      <p>Enter any game you love (e.g. <em>Balatro</em>, <em>Outer Wilds</em>, <em>Hades</em>, or <em>Celeste</em>), and we'll plunge deep into Steam to unearth hidden gems matching its exact mechanics and feel.</p>
     </div>
     <div class="similar-input-wrap">
       <input type="text" id="similarInput" class="similar-input" placeholder="Enter a game title (e.g. Balatro, Hades, Inscryption)..." autocomplete="off" />
@@ -1982,7 +1889,7 @@
       <button class="primary demo-btn similar-demo-btn" id="similarDemosBtn" type="button">Find with Demos</button>
     </div>
 
-    <div class="search-daterange-bar" style="margin-top:14px; margin-bottom:14px;">
+    <div class="search-daterange-bar" style="margin-top:16px; margin-bottom:0;">
       <span class="daterange-label">
         <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
         Release Date Range:
@@ -1994,19 +1901,10 @@
       </div>
       <span class="daterange-hint">(Leave blank to search all)</span>
     </div>
-    <div class="similar-suggestions">
-      <span class="suggestions-label">Try an example:</span>
-      <button type="button" class="sample-chip" data-game="Balatro">Balatro</button>
-      <button type="button" class="sample-chip" data-game="Hades">Hades</button>
-      <button type="button" class="sample-chip" data-game="Outer Wilds">Outer Wilds</button>
-      <button type="button" class="sample-chip" data-game="Inscryption">Inscryption</button>
-      <button type="button" class="sample-chip" data-game="Hollow Knight">Hollow Knight</button>
-      <button type="button" class="sample-chip" data-game="Slay the Spire">Slay the Spire</button>
-    </div>
   </section>
   <section class="section hidden" id="customSection">
     <div class="section-heading">
-      <h2>Custom Parameter Deep Search</h2>
+      <h2>Custom Search</h2>
       <div class="heading-controls">
         <span class="count" id="customSelectedCount">All genres</span>
       </div>
@@ -2057,27 +1955,63 @@
           <input type="number" id="customEndYear" class="custom-num-input" placeholder="Max Year" min="1995" max="2030" />
         </div>
       </div>
+    </div>
 
-      <!-- Steam Feature Categories -->
-      <div class="custom-control-card">
-        <div class="custom-control-header">
-          <span class="custom-control-title">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-            Feature Filter
-          </span>
-        </div>
-        <div class="custom-categories-list" id="customCategoriesList">
-          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Single-player"> Single-player</label>
-          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Multi-player"> Multi-player</label>
-          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Co-op"> Co-op</label>
-          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Full controller support"> Full Controller</label>
-          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Achievements"> Achievements</label>
-          <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Cloud"> Steam Cloud</label>
-        </div>
+    <!-- Full-Width Steam Feature Categories -->
+    <div class="custom-control-card custom-feature-card">
+      <div class="custom-control-header">
+        <span class="custom-control-title">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          Feature Filter
+        </span>
+      </div>
+      <div class="custom-categories-list" id="customCategoriesList">
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Single-player"> Single-player</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Multi-player"> Multi-player</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="PvP"> PvP</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Online PvP"> Online PvP</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="LAN PvP"> LAN PvP</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Shared/Split Screen PvP"> Shared/Split Screen PvP</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Co-op"> Co-op</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Online Co-op"> Online Co-op</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="LAN Co-op"> LAN Co-op</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Shared/Split Screen Co-op"> Shared/Split Screen Co-op</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Shared/Split Screen"> Shared/Split Screen</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Cross-Platform Multiplayer"> Cross-Platform Multiplayer</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="MMO"> MMO</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Achievements"> Steam Achievements</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Full controller support"> Full Controller Support</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Partial Controller Support"> Partial Controller Support</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Trading Cards"> Steam Trading Cards</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Workshop"> Steam Workshop</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Cloud"> Steam Cloud</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Valve Anti-Cheat enabled"> Valve Anti-Cheat</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Stats"> Stats</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Leaderboards"> Steam Leaderboards</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Includes level editor"> Includes Level Editor</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Includes Source SDK"> Includes Source SDK</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Captions available"> Captions Available</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Commentary available"> Commentary Available</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Remote Play on Phone"> Remote Play on Phone</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Remote Play on Tablet"> Remote Play on Tablet</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Remote Play on TV"> Remote Play on TV</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Remote Play Together"> Remote Play Together</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Family Sharing"> Family Sharing</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="HDR available"> HDR Available</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Steam Timeline"> Steam Timeline</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Tracked Controller Support"> Tracked Controller Support</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="VR Only"> VR Only</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="VR Supported"> VR Supported</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="In-App Purchases"> In-App Purchases</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Adjustable Difficulty"> Adjustable Difficulty</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Save Anytime"> Save Anytime</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Adjustable Text Size"> Adjustable Text Size</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Subtitle Options"> Subtitle Options</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Color Alternatives"> Color Alternatives</label>
+        <label class="custom-cat-chip"><input type="checkbox" name="customCat" value="Camera Comfort"> Camera Comfort</label>
       </div>
     </div>
 
-    <!-- Custom Genre Selection Grid -->
     <div style="font-size:14px; font-weight:650; color:#fff; text-align:center; margin:16px 0 12px 0;">Select Specific Genres (or leave blank to search across all indie tags):</div>
     <div class="genres" id="customGenres" aria-live="polite"></div>
 
@@ -2087,15 +2021,11 @@
       <button class="secondary" id="customClearBtn" type="button">Reset Parameters</button>
     </div>
   </section>
-
   <section class="section hidden" id="salesSection">
-    <div class="sales-intro">
-      <div class="sales-intro-icon">
-        <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
-      </div>
-      <div class="sales-intro-text">
-        <h2>Steam On-Sale Indie Hidden Gems</h2>
-        <p>Searches directly for high-quality hidden gems that are currently discounted on Steam. Pick your preferred genres or leave blank to discover any game currently on sale!</p>
+    <div class="section-heading">
+      <h2>Steam Sales Finder</h2>
+      <div class="heading-controls">
+        <span class="count" id="salesSelectedCount">All genres</span>
       </div>
     </div>
 
@@ -2112,12 +2042,6 @@
       <span class="daterange-hint">(Leave blank to search all)</span>
     </div>
 
-    <div class="section-heading">
-      <h2>Filter Sales by Genres (Optional)</h2>
-      <div class="heading-controls">
-        <span class="count" id="salesSelectedCount">All genres</span>
-      </div>
-    </div>
     <div class="genres" id="salesGenres" aria-live="polite"></div>
 
     <div class="actions" style="margin-top:20px;">
