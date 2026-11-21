@@ -446,7 +446,11 @@
     display: block;
   }
 
-   /* Tunnel Boring Animation */
+     /* Tunnel Boring Animation */
+  .earth-scroll {
+    animation: earthAdvance 2.2s linear infinite;
+  }
+
   .drill-rig {
     animation: rigRumble 0.14s ease-in-out infinite alternate;
   }
@@ -463,6 +467,11 @@
   @keyframes cutterSpin {
     from { transform: translateX(0px); }
     to { transform: translateX(18px); }
+  }
+
+  @keyframes earthAdvance {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-140px); }
   }
 
   .p1  { animation: arcL1 1.7s ease-out infinite; }
@@ -1822,7 +1831,6 @@
 
           <!-- 2. Scrolling geological strata -->
           <g class="earth-scroll">
-            <animateTransform attributeName="transform" type="translate" from="0 0" to="0 -140" dur="2.2s" repeatCount="indefinite"/>
             <g id="strataTile">
               <path d="M0 32 Q160 18 320 34 T640 28 V68 Q480 82 320 66 T0 72 Z" fill="#2e1d12"/>
               <path d="M0 105 Q180 120 340 102 T640 112 V132 Q460 118 300 134 T0 126 Z" fill="#472e1e"/>
