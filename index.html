@@ -1794,8 +1794,30 @@
     flex-shrink: 0;
     margin-top: 2px;
   }
+  @media (max-width: 768px) {
+    .search-mode-tabs {
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .search-mode-tab {
+      flex: 1 1 calc(50% - 8px);
+      min-width: calc(50% - 8px);
+      padding: 11px 10px;
+      font-size: 13px;
+      white-space: normal;
+      line-height: 1.25;
+    }
+
+    .search-mode-tab svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+
 </head>
 <body>
 <div class="app">
