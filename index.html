@@ -1733,14 +1733,31 @@
     50% { transform: translateX(-50%) scale(1.05); box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), 0 0 16px rgba(254, 178, 178, 0.8); }
   }
 
-  .similarity-reason-icon {
+   .similarity-reason-icon {
     width: 14px;
     height: 14px;
     fill: #a797ff;
     flex-shrink: 0;
     margin-top: 2px;
   }
+
+  @media (max-width: 768px) {
+    .search-mode-tabs {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .search-mode-tab {
+      flex: 1 1 calc(50% - 8px);
+      min-width: calc(50% - 8px);
+      white-space: normal;
+      line-height: 1.25;
+      padding: 11px 10px;
+      font-size: 13px;
+    }
+  }
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
 </head>
 <body>
@@ -1845,7 +1862,7 @@
     </button>
     <button class="search-mode-tab" id="tabSimilar" type="button" role="tab" aria-selected="false">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      <span>Find Games Like A Title…</span>
+      <span>Find Games Like…</span>
     </button>
   </div>
 
