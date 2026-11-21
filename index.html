@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1188,60 +1188,6 @@
     fill: currentColor;
     flex-shrink: 0;
   }
-    .search-mode-tab svg {
-    width: 17px;
-    height: 17px;
-    fill: currentColor;
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 768px) {
-    .search-mode-tabs {
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 8px;
-    }
-
-    .search-mode-tab {
-      flex: 1 1 calc(50% - 8px);
-      min-width: calc(50% - 8px);
-      padding: 11px 10px;
-      font-size: 13px;
-      white-space: normal;
-      line-height: 1.25;
-    }
-
-    .search-mode-tab svg {
-      width: 15px;
-      height: 15px;
-    }
-  }
-
-  /* ADD THIS NEW BLOCK RIGHT HERE */
-  @media (max-width: 768px) {
-    .search-mode-tabs {
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 8px;
-    }
-
-    .search-mode-tab {
-      flex: 1 1 calc(50% - 8px);
-      min-width: calc(50% - 8px);
-      padding: 11px 10px;
-      font-size: 13px;
-      white-space: normal;
-      line-height: 1.25;
-    }
-
-    .search-mode-tab svg {
-      width: 15px;
-      height: 15px;
-    }
-  }
-
-  /* Similar Search Section */
-  .similar-input-wrap {
 
   /* Similar Search Section */
   .similar-input-wrap {
@@ -1794,30 +1740,8 @@
     flex-shrink: 0;
     margin-top: 2px;
   }
-  @media (max-width: 768px) {
-    .search-mode-tabs {
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 8px;
-    }
-
-    .search-mode-tab {
-      flex: 1 1 calc(50% - 8px);
-      min-width: calc(50% - 8px);
-      padding: 11px 10px;
-      font-size: 13px;
-      white-space: normal;
-      line-height: 1.25;
-    }
-
-    .search-mode-tab svg {
-      width: 15px;
-      height: 15px;
-    }
-  }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-
 </head>
 <body>
 <div class="app">
@@ -1919,9 +1843,9 @@
       <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
       <span>Sales Finder</span>
     </button>
-       <button class="search-mode-tab" id="tabSimilar" type="button" role="tab" aria-selected="false">
+    <button class="search-mode-tab" id="tabSimilar" type="button" role="tab" aria-selected="false">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      <span>Find Games Like…</span>
+      <span>Find Games Like A Title…</span>
     </button>
   </div>
 
@@ -3424,8 +3348,8 @@
       completeProgress(function () {
         const resultsHeading = document.getElementById("resultsHeading");
         const demosHeading = document.getElementById("demosHeading");
-        if (resultsHeading) resultsHeading.textContent = "On-Sale Indie Gems";
-        if (demosHeading) demosHeading.textContent = "On-Sale Indie Gems with Demos";
+        if (resultsHeading) resultsHeading.textContent = "On Sale";
+        if (demosHeading) demosHeading.textContent = "On Sale with Demos";
         renderGames(data.games, isDemo);
         setLoading(false, isDemo, "sales");
       });
