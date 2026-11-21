@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Indie Spotlight</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%233b4cc0'/%3E%3Ccircle cx='50' cy='50' r='39' fill='%234f63e7'/%3E%3Ccircle cx='50' cy='50' r='26' fill='%233b4cc0'/%3E%3Cpath d='M21,32 Q22,23 34,23 Q39,23 40,29 Z' fill='%23facc15'/%3E%3Cpath d='M79,32 Q78,23 66,23 Q61,23 60,29 Z' fill='%23facc15'/%3E%3Cpath d='M19,36 Q28,27 41,30 Q50,32 59,30 Q72,27 81,36 L77,39 L23,39 Z' fill='%234c1d95'/%3E%3Cpath d='M19,36 C12,46 8,66 13,74 C19,82 29,79 36,69 C39,63 43,61 50,61 C57,61 61,63 64,69 C71,79 81,82 87,74 C92,66 88,46 81,36 C72,30 62,33 50,33 C38,33 28,30 19,36 Z' fill='%237c3aed'/%3E%3Cpath d='M12,67 C11,72 16,79 23,79 C30,79 34,72 39,66 C42,61 46,60 50,60 C54,60 58,61 61,66 C66,72 70,79 77,79 C84,79 89,72 88,67 C86,72 80,74 76,73 C70,72 66,64 61,60 C58,57 54,56 50,56 C46,56 42,57 39,60 C34,64 30,72 24,73 C20,74 14,72 12,67 Z' fill='%235b21b6'/%3E%3Crect x='25' y='47' width='18' height='7' rx='2' fill='%23facc15'/%3E%3Crect x='31' y='41' width='7' height='18' rx='2' fill='%23facc15'/%3E%3Ccircle cx='70' cy='43' r='3.6' fill='%23facc15'/%3E%3Ccircle cx='70' cy='57' r='3.6' fill='%23facc15'/%3E%3Ccircle cx='63' cy='50' r='3.6' fill='%23facc15'/%3E%3Ccircle cx='77' cy='50' r='3.6' fill='%23facc15'/%3E%3C/svg%3E">
 <style>
+
   :root {
     color-scheme: dark;
     --bg: #10131a;
@@ -444,82 +446,121 @@
     display: block;
   }
 
-  /* Excavator CSS Keyframe Animations */
-  .boom-arm {
-    transform-origin: 119px 128px;
-    animation: boomCycle 3.5s ease-in-out infinite;
+   /* Tunnel Boring Animation */
+  .drill-rig {
+    animation: rigRumble 0.14s ease-in-out infinite alternate;
   }
 
-  .dipper-arm {
-    transform-origin: 164px 88px;
-    animation: dipperCycle 3.5s ease-in-out infinite;
+  .cutter-teeth {
+    animation: cutterSpin 0.4s linear infinite;
   }
 
-  .excavator-bucket {
-    transform-origin: 216px 120px;
-    animation: bucketCycle 3.5s ease-in-out infinite;
+  @keyframes rigRumble {
+    0% { transform: translate(-0.6px, 0px); }
+    100% { transform: translate(0.6px, 1.1px); }
   }
 
-  .excavator-body {
-    transform-origin: 90px 136px;
-    animation: cabRock 3.5s ease-in-out infinite;
+  @keyframes cutterSpin {
+    from { transform: translateX(0px); }
+    to { transform: translateX(18px); }
   }
 
-  .dust {
-    opacity: 0;
-    animation: dustFly 3.5s ease-out infinite;
+  .p1  { animation: arcL1 1.7s ease-out infinite; }
+  .p2  { animation: arcR1 1.7s ease-out infinite 0.15s; }
+  .p3  { animation: arcL2 1.9s ease-out infinite 0.30s; }
+  .p4  { animation: arcR2 1.9s ease-out infinite 0.45s; }
+  .p5  { animation: arcL3 1.6s ease-out infinite 0.60s; }
+  .p6  { animation: arcR3 1.6s ease-out infinite 0.75s; }
+  .p7  { animation: arcL4 2.0s ease-out infinite 0.90s; }
+  .p8  { animation: arcR4 2.0s ease-out infinite 1.05s; }
+  .p9  { animation: arcL5 1.8s ease-out infinite 1.20s; }
+  .p10 { animation: arcR5 1.8s ease-out infinite 1.35s; }
+  .p11 { animation: arcL1 1.7s ease-out infinite 0.85s; }
+  .p12 { animation: arcR1 1.7s ease-out infinite 1.00s; }
+  .p13 { animation: arcL2 1.9s ease-out infinite 1.15s; }
+  .p14 { animation: arcR2 1.9s ease-out infinite 1.30s; }
+  .p15 { animation: arcL3 1.6s ease-out infinite 1.45s; }
+  .p16 { animation: arcR3 1.6s ease-out infinite 0.20s; }
+  .p17 { animation: arcL4 2.0s ease-out infinite 0.40s; }
+  .p18 { animation: arcR4 2.0s ease-out infinite 0.65s; }
+  .p19 { animation: arcL5 1.8s ease-out infinite 0.50s; }
+  .p20 { animation: arcR5 1.8s ease-out infinite 0.95s; }
+
+  @keyframes arcL1 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(272px, 152px) rotate(-60deg); }
+    32%  { opacity: 1; transform: translate(246px, 156px) rotate(-110deg); }
+    72%  { opacity: 0.9; transform: translate(245px, 150px) rotate(-115deg); }
+    100% { opacity: 0; transform: translate(245px, 142px) rotate(-115deg); }
+  }
+  @keyframes arcR1 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(368px, 152px) rotate(60deg); }
+    32%  { opacity: 1; transform: translate(394px, 156px) rotate(110deg); }
+    72%  { opacity: 0.9; transform: translate(395px, 150px) rotate(115deg); }
+    100% { opacity: 0; transform: translate(395px, 142px) rotate(115deg); }
   }
 
-  .dust-1 { animation-delay: 1.2s; }
-  .dust-2 { animation-delay: 1.4s; }
-  .dust-3 { animation-delay: 1.3s; }
-
-  .quarry-gem {
-    animation: gemGlow 3.5s ease-in-out infinite;
+  @keyframes arcL2 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(282px, 168px) rotate(-45deg); }
+    32%  { opacity: 1; transform: translate(256px, 174px) rotate(-85deg); }
+    72%  { opacity: 0.9; transform: translate(255px, 168px) rotate(-90deg); }
+    100% { opacity: 0; transform: translate(255px, 160px) rotate(-90deg); }
+  }
+  @keyframes arcR2 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(358px, 168px) rotate(45deg); }
+    32%  { opacity: 1; transform: translate(384px, 174px) rotate(85deg); }
+    72%  { opacity: 0.9; transform: translate(385px, 168px) rotate(90deg); }
+    100% { opacity: 0; transform: translate(385px, 160px) rotate(90deg); }
   }
 
-  @keyframes boomCycle {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(14deg); }
-    50% { transform: rotate(18deg); }
-    70% { transform: rotate(-6deg); }
-    85% { transform: rotate(-2deg); }
+  @keyframes arcL3 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(292px, 184px) rotate(-35deg); }
+    32%  { opacity: 1; transform: translate(270px, 190px) rotate(-70deg); }
+    72%  { opacity: 0.9; transform: translate(269px, 184px) rotate(-75deg); }
+    100% { opacity: 0; transform: translate(269px, 176px) rotate(-75deg); }
+  }
+  @keyframes arcR3 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(348px, 184px) rotate(35deg); }
+    32%  { opacity: 1; transform: translate(370px, 190px) rotate(70deg); }
+    72%  { opacity: 0.9; transform: translate(371px, 184px) rotate(75deg); }
+    100% { opacity: 0; transform: translate(371px, 176px) rotate(75deg); }
   }
 
-  @keyframes dipperCycle {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-10deg); }
-    50% { transform: rotate(16deg); }
-    70% { transform: rotate(24deg); }
-    85% { transform: rotate(6deg); }
+  @keyframes arcL4 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(270px, 134px) rotate(-75deg); }
+    32%  { opacity: 1; transform: translate(244px, 138px) rotate(-135deg); }
+    72%  { opacity: 0.9; transform: translate(244px, 132px) rotate(-140deg); }
+    100% { opacity: 0; transform: translate(244px, 124px) rotate(-140deg); }
+  }
+  @keyframes arcR4 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(370px, 134px) rotate(75deg); }
+    32%  { opacity: 1; transform: translate(396px, 138px) rotate(135deg); }
+    72%  { opacity: 0.9; transform: translate(396px, 132px) rotate(140deg); }
+    100% { opacity: 0; transform: translate(396px, 124px) rotate(140deg); }
   }
 
-  @keyframes bucketCycle {
-    0%, 100% { transform: rotate(0deg); }
-    20% { transform: rotate(-18deg); }
-    45% { transform: rotate(38deg); }
-    70% { transform: rotate(45deg); }
-    85% { transform: rotate(5deg); }
+  @keyframes arcL5 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(302px, 198px) rotate(-25deg); }
+    32%  { opacity: 1; transform: translate(288px, 204px) rotate(-55deg); }
+    72%  { opacity: 0.9; transform: translate(287px, 198px) rotate(-60deg); }
+    100% { opacity: 0; transform: translate(287px, 190px) rotate(-60deg); }
+  }
+  @keyframes arcR5 {
+    0%   { opacity: 0; transform: translate(320px, 212px) rotate(0deg); }
+    12%  { opacity: 1; transform: translate(338px, 198px) rotate(25deg); }
+    32%  { opacity: 1; transform: translate(352px, 204px) rotate(55deg); }
+    72%  { opacity: 0.9; transform: translate(353px, 198px) rotate(60deg); }
+    100% { opacity: 0; transform: translate(353px, 190px) rotate(60deg); }
   }
 
-  @keyframes cabRock {
-    0%, 100% { transform: rotate(0deg); }
-    40% { transform: rotate(1deg); }
-    55% { transform: rotate(-0.5deg); }
-    75% { transform: rotate(-1deg); }
-  }
-
-  @keyframes dustFly {
-    0%, 35% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-    45% { opacity: 0.9; transform: translate(-6px, -12px) scale(1.2); }
-    65% { opacity: 0; transform: translate(-14px, -24px) scale(0.2); }
-    100% { opacity: 0; }
-  }
-
-  @keyframes gemGlow {
-    0%, 100% { opacity: 0.4; transform: scale(0.9); transform-origin: 270px 128px; }
-    50% { opacity: 1; transform: scale(1.15); transform-origin: 270px 128px; filter: drop-shadow(0 0 6px #c4b5fd); }
-  }
 
   .welcome-title {
     font-size: clamp(32px, 5vw, 48px);
@@ -1765,75 +1806,114 @@
   <h1>Indie Spotlight</h1>
   <p class="intro">Discover your next favourite indie game.</p>
 
-  <!-- Full Screen Welcome Notification -->
+   <!-- Full Screen Welcome Notification -->
   <div class="welcome-overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
     <div class="welcome-modal">
       <div class="welcome-graphic-wrap">
-        <svg class="quarry-animation" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Excavation machine digging in a quarry for hidden gems">
+        <svg class="quarry-animation" viewBox="0 0 640 280" fill="none" xmlns="http://w3.org" aria-label="Tunnel boring machine digging through earth for hidden gems">
           <defs>
-            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="180" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#121622"/>
-              <stop offset="1" stop-color="#1e2535"/>
-            </linearGradient>
-            <linearGradient id="excavatorGold" x1="0" y1="0" x2="1" y2="1">
-              <stop stop-color="#fbbf24"/>
-              <stop offset="1" stop-color="#d97706"/>
-            </linearGradient>
+            <clipPath id="cutterHeadClip">
+              <polygon points="244,126 396,126 320,210"/>
+            </clipPath>
           </defs>
 
-          <rect width="320" height="180" rx="12" fill="url(#skyGrad)"/>
-          <path d="M0 85 L70 70 L140 80 L220 60 L320 75 L320 180 L0 180 Z" fill="#252e3e" opacity="0.6"/>
-          <path d="M0 110 L90 95 L180 108 L260 92 L320 105 L320 180 L0 180 Z" fill="#2a3447" opacity="0.8"/>
-          <path d="M0 148 L320 148 L320 180 L0 180 Z" fill="#1c2230"/>
-          <path d="M190 148 Q220 120 250 115 Q285 110 320 148 Z" fill="#374151"/>
-          <path d="M225 148 Q245 125 275 120 Q300 118 320 148 Z" fill="#4b5563" opacity="0.7"/>
+          <!-- 1. Solid unexcavated earth -->
+          <rect width="640" height="280" fill="#3a2518"/>
 
-          <g class="quarry-gem">
-            <polygon points="270,122 277,128 270,138 263,128" fill="#a78bfa" stroke="#c4b5fd" stroke-width="1"/>
-            <circle cx="270" cy="128" r="8" fill="#a78bfa" opacity="0.25"/>
+          <!-- 2. Scrolling geological strata -->
+          <g class="earth-scroll">
+            <animateTransform attributeName="transform" type="translate" from="0 0" to="0 -140" dur="2.2s" repeatCount="indefinite"/>
+            <g id="strataTile">
+              <path d="M0 32 Q160 18 320 34 T640 28 V68 Q480 82 320 66 T0 72 Z" fill="#2e1d12"/>
+              <path d="M0 105 Q180 120 340 102 T640 112 V132 Q460 118 300 134 T0 126 Z" fill="#472e1e"/>
+              <ellipse cx="95" cy="52" rx="11" ry="6" fill="#22150d"/>
+              <ellipse cx="185" cy="96" rx="8" ry="5" fill="#543825"/>
+              <ellipse cx="310" cy="48" rx="9" ry="5" fill="#22150d"/>
+              <ellipse cx="345" cy="115" rx="7" ry="4" fill="#543825"/>
+              <ellipse cx="465" cy="44" rx="10" ry="6" fill="#543825"/>
+              <ellipse cx="555" cy="88" rx="12" ry="7" fill="#22150d"/>
+            </g>
+            <use href="#strataTile" y="140"/>
+            <use href="#strataTile" y="280"/>
           </g>
 
-          <circle class="dust dust-1" cx="230" cy="125" r="2.5" fill="#9ca3af"/>
-          <circle class="dust dust-2" cx="240" cy="118" r="2" fill="#d1d5db"/>
-          <circle class="dust dust-3" cx="220" cy="130" r="1.5" fill="#f59e0b"/>
+          <!-- 3. Excavated shaft -->
+          <path d="M240 -20 H400 V142 Q400 178 320 222 Q240 178 240 142 Z" fill="#140d08"/>
+          <path d="M240 -20 V142 Q240 178 320 222 Q400 178 400 142 V-20" stroke="#593c28" stroke-width="3" fill="none"/>
 
-          <g class="excavator-chassis">
-            <rect x="52" y="136" width="76" height="18" rx="7" fill="#1e2430" stroke="#374151" stroke-width="2"/>
-            <circle cx="62" cy="145" r="5" fill="#374151"/>
-            <circle cx="77" cy="145" r="5" fill="#374151"/>
-            <circle cx="92" cy="145" r="5" fill="#374151"/>
-            <circle cx="107" cy="145" r="5" fill="#374151"/>
-            <circle cx="120" cy="145" r="5" fill="#374151"/>
+          <!-- 4. Tunnel boring machine -->
+          <g class="drill-rig">
+            <rect x="244" y="-20" width="152" height="134" fill="#eab308" stroke="#854d0e" stroke-width="2"/>
+            <line x1="266" y1="-20" x2="266" y2="114" stroke="#ca8a04" stroke-width="2"/>
+            <line x1="374" y1="-20" x2="374" y2="114" stroke="#ca8a04" stroke-width="2"/>
 
-            <g class="excavator-body">
-              <path d="M55 136 L55 112 Q55 106 62 106 L112 106 Q118 106 122 112 L128 126 L128 136 Z" fill="url(#excavatorGold)"/>
-              <rect x="53" y="112" width="16" height="24" rx="2" fill="#b45309"/>
-              <path d="M96 110 L112 110 L118 124 L96 124 Z" fill="#93c5fd" opacity="0.85"/>
-              <line x1="106" y1="110" x2="106" y2="124" stroke="#1e293b" stroke-width="1.5"/>
+            <!-- Controller emblem -->
+            <g transform="translate(320, 44) scale(0.56)">
+              <circle cx="0" cy="0" r="44" fill="#3b4cc0"/>
+              <circle cx="0" cy="0" r="36" fill="#4f63e7"/>
+              <circle cx="0" cy="0" r="24" fill="#3b4cc0"/>
+              <path d="M-26,-16 Q-25,-24 -14,-24 Q-10,-24 -9,-19 Z" fill="#facc15"/>
+              <path d="M26,-16 Q25,-24 14,-24 Q10,-24 9,-19 Z" fill="#facc15"/>
+              <path d="M-28,-13 Q-20,-21 -8,-18 Q0,-16 8,-18 Q20,-21 28,-13 L25,-10 L-25,-10 Z" fill="#4c1d95"/>
+              <path d="M-28,-13 C-34,-4 -38,14 -33,22 C-28,29 -19,26 -13,17 C-10,12 -6,10 0,10 C6,10 10,12 13,17 C19,26 28,29 33,22 C38,14 34,-4 28,-13 C20,-18 11,-15 0,-15 C-11,-15 -20,-18 -28,-13 Z" fill="#7c3aed"/>
+              <path d="M-34,15 C-35,20 -31,26 -24,26 C-18,26 -14,20 -10,14 C-7,10 -4,9 0,9 C4,9 7,10 10,14 C14,20 18,26 24,26 C31,26 35,20 34,15 C32,20 27,22 23,21 C18,20 14,13 10,9 C7,6 4,5 0,5 C-4,5 -7,6 -10,9 C-14,13 -18,20 -23,21 C-27,22 -32,20 -34,15 Z" fill="#5b21b6"/>
+              <rect x="-22" y="-3" width="16" height="6" rx="2" fill="#facc15"/>
+              <rect x="-17" y="-8" width="6" height="16" rx="2" fill="#facc15"/>
+              <circle cx="18" cy="-6" r="3.2" fill="#facc15"/>
+              <circle cx="18" cy="6" r="3.2" fill="#facc15"/>
+              <circle cx="12" cy="0" r="3.2" fill="#facc15"/>
+              <circle cx="24" cy="0" r="3.2" fill="#facc15"/>
+            </g>
 
-              <g class="boom-arm">
-                <path d="M118 126 L160 84 L170 88 L124 132 Z" fill="#f59e0b" stroke="#b45309" stroke-width="1"/>
-                <circle cx="119" cy="128" r="3.5" fill="#374151"/>
-                <line x1="110" y1="120" x2="142" y2="98" stroke="#cbd5e1" stroke-width="2.5"/>
+            <rect x="244" y="92" width="152" height="14" fill="#1e293b"/>
+            <path d="M254 92 L262 106 M274 92 L282 106 M294 92 L302 106 M314 92 L322 106 M334 92 L342 106 M354 92 L362 106 M374 92 L382 106" stroke="#eab308" stroke-width="3"/>
+            <rect x="244" y="114" width="152" height="12" fill="#334155" stroke="#1e293b" stroke-width="1.5"/>
 
-                <g class="dipper-arm">
-                  <path d="M165 86 L218 116 L214 122 L160 92 Z" fill="#d97706" stroke="#92400e" stroke-width="1"/>
-                  <circle cx="164" cy="88" r="3" fill="#374151"/>
-                  <line x1="150" y1="84" x2="185" y2="102" stroke="#cbd5e1" stroke-width="2"/>
-
-                  <g class="excavator-bucket">
-                    <path d="M216 119 Q228 115 236 126 L232 136 Q220 138 214 127 Z" fill="#475569" stroke="#1e293b" stroke-width="1.2"/>
-                    <polygon points="234,136 238,140 236,134" fill="#94a3b8"/>
-                    <polygon points="230,137 234,142 232,135" fill="#94a3b8"/>
-                    <polygon points="226,138 230,143 228,136" fill="#94a3b8"/>
-                    <circle cx="216" cy="120" r="2.5" fill="#1e293b"/>
-                  </g>
-                </g>
+            <polygon points="244,126 396,126 320,210" fill="#94a3b8"/>
+            <g clip-path="url(#cutterHeadClip)" fill="#334155">
+              <g class="cutter-teeth">
+                <rect x="234" y="126" width="9" height="86"/>
+                <rect x="252" y="126" width="9" height="86"/>
+                <rect x="270" y="126" width="9" height="86"/>
+                <rect x="288" y="126" width="9" height="86"/>
+                <rect x="306" y="126" width="9" height="86"/>
+                <rect x="324" y="126" width="9" height="86"/>
+                <rect x="342" y="126" width="9" height="86"/>
+                <rect x="360" y="126" width="9" height="86"/>
+                <rect x="378" y="126" width="9" height="86"/>
+                <rect x="396" y="126" width="9" height="86"/>
               </g>
             </g>
+            <polygon points="244,126 396,126 320,210" stroke="#475569" stroke-width="2" fill="none"/>
+            <polygon points="308,196 332,196 320,214" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+          </g>
+
+          <!-- 5. Pure-CSS Rock & Dirt Debris Particles -->
+          <g>
+            <rect class="p1" x="-3" y="-2.5" width="6" height="5" rx="1" fill="#b8865c"/>
+            <rect class="p2" x="-3" y="-2.5" width="6" height="5" rx="1" fill="#9c6b43"/>
+            <circle class="p3" cx="0" cy="0" r="3.5" fill="#c99a70"/>
+            <circle class="p4" cx="0" cy="0" r="3.5" fill="#94a3b8"/>
+            <polygon class="p5" points="-2.5,-3.5 2,-2.8 3.5,0 2.2,3 -1.5,3.5 -3.5,0.5" fill="#785238"/>
+            <polygon class="p6" points="-2.5,-3.5 2,-2.8 3.5,0 2.2,3 -1.5,3.5 -3.5,0.5" fill="#cbd5e1"/>
+            <ellipse class="p7" cx="0" cy="0" rx="4" ry="2.5" fill="#b8865c"/>
+            <ellipse class="p8" cx="0" cy="0" rx="4" ry="2.5" fill="#9c6b43"/>
+            <circle class="p9" cx="0" cy="0" r="2.8" fill="#cbd5e1"/>
+            <circle class="p10" cx="0" cy="0" r="2.8" fill="#c99a70"/>
+            <polygon class="p11" points="-2,-3 2.5,-2 3,1 1,3 -2.5,2.5" fill="#94a3b8"/>
+            <polygon class="p12" points="-2,-3 2.5,-2 3,1 1,3 -2.5,2.5" fill="#785238"/>
+            <rect class="p13" x="-2.5" y="-2" width="5" height="4" rx="1" fill="#cbd5e1"/>
+            <rect class="p14" x="-2.5" y="-2" width="5" height="4" rx="1" fill="#b8865c"/>
+            <ellipse class="p15" cx="0" cy="0" rx="3.5" ry="2.2" fill="#9c6b43"/>
+            <ellipse class="p16" cx="0" cy="0" rx="3.5" ry="2.2" fill="#94a3b8"/>
+            <circle class="p17" cx="0" cy="0" r="3.2" fill="#785238"/>
+            <circle class="p18" cx="0" cy="0" r="3.2" fill="#c99a70"/>
+            <rect class="p19" x="-3" y="-2" width="6" height="4" rx="1" fill="#94a3b8"/>
+            <rect class="p20" x="-3" y="-2" width="6" height="4" rx="1" fill="#b8865c"/>
           </g>
         </svg>
       </div>
+
 
       <h2 class="welcome-title" id="welcomeTitle">Welcome to Indie Spotlight</h2>
       <p class="welcome-text">
